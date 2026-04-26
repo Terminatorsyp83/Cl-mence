@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>💌 Mes 100 Petits Trésors</title>
+  <title>💌 Mes 50 Petits Trésors</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
   <script>const EDIT_PASSWORD = "edit";</script><!-- ← CHANGE TON MOT DE PASSE ICI -->
   <style>
@@ -52,18 +52,18 @@
     .prog-bg  { height:6px; background:rgba(255,255,255,.07); border-radius:99px; overflow:hidden; }
     .prog-fill { height:100%; background:linear-gradient(90deg,var(--rose),var(--gold)); border-radius:99px; transition:width .8s cubic-bezier(.4,0,.2,1); box-shadow:0 0 10px rgba(212,97,122,.5); }
     /* ─── GRID ─── */
-    .grid-wrap { position:relative; z-index:1; max-width:1100px; margin:2rem auto 4rem; padding:0 clamp(.75rem,3vw,2rem); }
-    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(clamp(68px,9vw,96px),1fr)); gap:clamp(8px,1.5vw,14px); }
+    .grid-wrap { position:relative; z-index:1; max-width:900px; margin:2rem auto 4rem; padding:0 clamp(.75rem,3vw,2rem); }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(clamp(80px,11vw,110px),1fr)); gap:clamp(10px,2vw,16px); }
     /* ─── BOX ─── */
     .box { aspect-ratio:1; border-radius:var(--radius); cursor:default; position:relative; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:4px; transition:transform var(--trans),box-shadow var(--trans); user-select:none; overflow:hidden; }
-    .box-num   { font-size:clamp(.55rem,1.2vw,.75rem); font-weight:700; letter-spacing:.04em; opacity:.5; }
-    .box-emoji { font-size:clamp(1rem,2.5vw,1.6rem); line-height:1; }
+    .box-num   { font-size:clamp(.6rem,1.4vw,.82rem); font-weight:700; letter-spacing:.04em; opacity:.5; }
+    .box-emoji { font-size:clamp(1.2rem,3vw,1.9rem); line-height:1; }
     .box.locked    { background:var(--card-lock); border:1px solid rgba(255,255,255,.05); }
     .box.locked .box-num   { color:var(--muted); }
     .box.locked .box-emoji { opacity:.25; }
     .box.available { background:linear-gradient(135deg,#2a1040 0%,#1a0828 100%); border:1px solid var(--gold); cursor:pointer; animation:pulse-glow 2s ease-in-out infinite; box-shadow:0 0 20px rgba(201,160,85,.25),inset 0 0 20px rgba(201,160,85,.05); }
     .box.available .box-num { color:var(--gold); }
-    .box.available:hover  { transform:scale(1.08) translateY(-3px); box-shadow:0 8px 30px rgba(201,160,85,.4),inset 0 0 20px rgba(201,160,85,.1); }
+    .box.available:hover  { transform:scale(1.08) translateY(-3px); box-shadow:0 8px 30px rgba(201,160,85,.4),inset 0 0 20px rgba(201,160,85,.1); animation:none; }
     .box.available:active { transform:scale(.97); }
     @keyframes pulse-glow { 0%,100%{box-shadow:0 0 15px rgba(201,160,85,.2),inset 0 0 15px rgba(201,160,85,.04)} 50%{box-shadow:0 0 28px rgba(201,160,85,.4),inset 0 0 24px rgba(201,160,85,.09)} }
     .box.opened { background:linear-gradient(135deg,#2d0e1a 0%,#1e0a12 100%); border:1px solid rgba(212,97,122,.3); cursor:pointer; }
@@ -72,11 +72,10 @@
     .box.opened:hover { transform:scale(1.04); box-shadow:0 4px 20px rgba(212,97,122,.2); }
     @keyframes box-pop { 0%{transform:scale(1)} 40%{transform:scale(1.18) rotate(3deg)} 70%{transform:scale(.95) rotate(-1deg)} 100%{transform:scale(1)} }
     .box.opening { animation:box-pop .5s cubic-bezier(.4,0,.2,1) forwards; }
-    /* Edit mode */
     .edit-mode .box { cursor:pointer!important; animation:none!important; }
     .edit-mode .box::after { content:'✏️'; position:absolute; top:4px; right:5px; font-size:clamp(.5rem,1.5vw,.75rem); opacity:0; transition:opacity .2s; pointer-events:none; }
     .edit-mode .box:hover::after { opacity:1; }
-    .edit-mode .box:hover { transform:scale(1.05); box-shadow:0 0 0 2px var(--gold); }
+    .edit-mode .box:hover { transform:scale(1.05); box-shadow:0 0 0 2px var(--gold); animation:none; }
     /* ─── MODAL BASE ─── */
     .overlay { position:fixed; inset:0; z-index:100; background:rgba(7,2,12,.88); backdrop-filter:blur(12px); display:flex; align-items:center; justify-content:center; padding:1rem; opacity:0; pointer-events:none; transition:opacity .35s ease; }
     .overlay.open { opacity:1; pointer-events:all; }
@@ -86,7 +85,7 @@
     .modal::-webkit-scrollbar-thumb { background:rgba(201,160,85,.2); border-radius:2px; }
     .x-btn { position:absolute; top:1rem; right:1rem; background:rgba(255,255,255,.07); border:none; border-radius:50%; width:36px; height:36px; color:var(--muted); font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s,color .2s; }
     .x-btn:hover { background:rgba(212,97,122,.2); color:var(--rose2); }
-    /* ─── VIEW MODAL CONTENT ─── */
+    /* ─── VIEW MODAL ─── */
     .m-badge { display:inline-block; font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(201,160,85,.3); border-radius:99px; padding:3px 12px; margin-bottom:1rem; }
     .m-emoji { font-size:3rem; display:block; text-align:center; margin-bottom:.5rem; animation:ebouce .6s cubic-bezier(.34,1.56,.64,1); }
     @keyframes ebouce { from{transform:scale(0) rotate(-20deg)} to{transform:scale(1) rotate(0)} }
@@ -94,13 +93,13 @@
     .m-text  { font-family:'Cormorant Garamond',serif; font-size:clamp(1.05rem,2.5vw,1.25rem); font-style:italic; color:var(--cream); line-height:1.8; text-align:center; opacity:.9; }
     .m-photo { width:100%; border-radius:14px; overflow:hidden; margin-bottom:1rem; aspect-ratio:4/3; background:rgba(255,255,255,.04); display:flex; align-items:center; justify-content:center; border:1px dashed rgba(201,160,85,.2); }
     .m-photo img { width:100%; height:100%; object-fit:cover; border-radius:14px; }
-    .m-placeholder { color:var(--muted); font-size:.85rem; text-align:center; padding:1rem; }
+    .m-placeholder { color:var(--muted); font-size:.85rem; text-align:center; padding:1rem; line-height:1.6; }
     .m-caption { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.05rem; color:var(--rose2); text-align:center; margin-top:.8rem; opacity:.85; }
     .coupon { background:rgba(255,255,255,.03); border:2px dashed rgba(201,160,85,.35); border-radius:16px; padding:1.5rem; text-align:center; position:relative; }
     .coupon::before,.coupon::after { content:'✦'; color:var(--gold); opacity:.4; font-size:.7rem; position:absolute; top:50%; transform:translateY(-50%); }
     .coupon::before{left:-1px;} .coupon::after{right:-1px;}
     .coupon-lbl  { font-size:.65rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--rose); margin-bottom:.6rem; }
-    .coupon-main { font-family:'Cormorant Garamond',serif; font-size:clamp(1.3rem,4vw,1.8rem); font-style:italic; color:var(--cream); line-height:1.3; }
+    .coupon-main { font-family:'Cormorant Garamond',serif; font-size:clamp(1.3rem,4vw,1.8rem); font-style:italic; color:var(--cream); line-height:1.4; }
     .coupon-foot { margin-top:.6rem; font-size:.72rem; color:var(--muted); }
     .m-divider { width:60px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:1.2rem auto; }
     .m-nav { display:flex; gap:.75rem; margin-top:1.5rem; justify-content:center; flex-wrap:wrap; }
@@ -158,12 +157,12 @@
 
 <div class="header">
   <div class="header-hearts">♡ ♡ ♡</div>
-  <h1>Mes 100 Petits Trésors</h1>
+  <h1>Mes 50 Petits Trésors</h1>
   <p class="header-sub">Ouvre-les dans l'ordre, un à un, comme autant de petits moments qui t'appartiennent.</p>
 </div>
 
 <div class="prog-wrap">
-  <div class="prog-lbl"><span>Progression</span><span id="prog-text">0 / 100</span></div>
+  <div class="prog-lbl"><span>Progression</span><span id="prog-text">0 / 50</span></div>
   <div class="prog-bg"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
 </div>
 
@@ -249,115 +248,339 @@
 
 <div class="toast" id="toast">✅ Téléchargé ! Réupload-le sur GitHub.</div>
 
-<!-- DONNÉES DES CASES -->
+<!-- ═══════════════════════════════════════════
+     DONNÉES DES 50 CASES
+     Répartition : 21 textes · 20 photos · 9 bons cadeaux
+═══════════════════════════════════════════ -->
 <script type="application/json" id="boxesData">
 [
-  {"type":"text","emoji":"💌","title":"Pour commencer…","content":"Bienvenue dans ce petit espace que j'ai créé rien que pour toi. Chaque case est un bout de moi, une pensée, un souvenir, un cadeau. Ouvre-les quand tu veux — il n'y a pas de règles, juste de l'amour."},
-  {"type":"coupon","emoji":"🤗","title":"Bon Cadeau","couponText":"Bon pour 1 câlin de 10 minutes minimum, sans condition, à utiliser quand tu veux."},
-  {"type":"text","emoji":"✨","title":"Ce que j'aime chez toi","content":"Ton sourire. Ce sourire qui change tout. Quand il apparaît, le monde autour de toi s'arrête et je me dis que je suis le plus chanceux."},
-  {"type":"photo","emoji":"📸","title":"Un souvenir à nous","imageUrl":"","caption":"Un moment que je n'oublierai jamais."},
-  {"type":"coupon","emoji":"🎬","title":"Bon Cadeau","couponText":"Bon pour 1 soirée ciné de ton choix — ton film, tes snacks, ton plaid, et moi à côté."},
-  {"type":"text","emoji":"🌙","title":"Les nuits avec toi","content":"Il y a quelque chose de magique dans le fait de s'endormir à côté de toi. Tu fais des petits bruits en dormant que je trouve absolument adorables."},
-  {"type":"coupon","emoji":"🛁","title":"Bon Cadeau","couponText":"Bon pour 1 bain bien chaud préparé par moi, avec bougies, mousses et tout le tralala."},
-  {"type":"text","emoji":"💛","title":"Le moment où j'ai compris","content":"Je me souviens exactement du moment où j'ai su que tu comptais vraiment pour moi. C'était un truc tout simple — un éclat de rire, un regard — et quelque chose en moi a basculé."},
-  {"type":"photo","emoji":"🌅","title":"Notre endroit préféré","imageUrl":"","caption":"Ici, avec toi, je me sens chez moi."},
-  {"type":"coupon","emoji":"☕","title":"Bon Cadeau","couponText":"Bon pour 1 petit-déjeuner au lit, préparé par moi, avec tout ce que tu aimes."},
-  {"type":"text","emoji":"🌸","title":"Petite liste d'amour","content":"Les choses que tu fais et que j'adore :\n\n→ Quand tu ris à gorge déployée\n→ Quand tu fais semblant d'être fâchée\n→ Tes \"hm\" quand tu réfléchis\n→ Ta façon de te lover contre moi"},
-  {"type":"coupon","emoji":"💆","title":"Bon Cadeau","couponText":"Bon pour 1 massage de 30 minutes, où tu veux, quand tu veux — sans condition."},
-  {"type":"text","emoji":"🌈","title":"Nos différences","content":"On n'est pas pareils, et c'est exactement ce que j'aime. Tu me surprends, tu m'apprends, tu me fais voir les choses autrement. Avec toi, je grandis."},
-  {"type":"photo","emoji":"🤳","title":"Ma photo préférée de nous","imageUrl":"","caption":"La première fois que j'ai vu cette photo, j'ai souri pendant une heure."},
-  {"type":"coupon","emoji":"🍕","title":"Bon Cadeau","couponText":"Bon pour 1 soirée pizza maison — on fait la pâte ensemble, tu choisis les garnitures."},
-  {"type":"text","emoji":"🌊","title":"Ce que tu m'apprends","content":"Tu m'apprends à ralentir, à prendre le temps. Dans un monde qui va trop vite, tu es mon ancre. Avec toi, je respire différemment."},
-  {"type":"coupon","emoji":"🎮","title":"Bon Cadeau","couponText":"Bon pour 1 après-midi de ton choix — parce que ton bonheur, c'est ma priorité."},
-  {"type":"text","emoji":"💫","title":"Une promesse","content":"Je te promets de toujours trouver une raison de te faire sourire, même les jours difficiles. Surtout les jours difficiles."},
-  {"type":"photo","emoji":"🌺","title":"Ce jour-là","imageUrl":"","caption":"Un jour que je garderai toujours dans un coin de ma mémoire."},
-  {"type":"coupon","emoji":"🧸","title":"Bon Cadeau","couponText":"Bon pour 1 heure de papouilles sans interruption — téléphone éteint, monde mis en pause."},
-  {"type":"text","emoji":"🔥","title":"Ce feu-là","content":"Il y a une chaleur avec toi que je ne trouve nulle part ailleurs. Une évidence. Quand je suis à tes côtés, je n'ai besoin de rien d'autre."},
-  {"type":"coupon","emoji":"🚗","title":"Bon Cadeau","couponText":"Bon pour 1 sortie surprise organisée par moi — tu ne sais pas où, tu n'as qu'à te laisser emmener."},
-  {"type":"text","emoji":"🌟","title":"Tu brilles","content":"Tu ne te rends pas compte à quel point tu rayonnes. Les gens te regardent, et pas seulement parce que tu es belle — parce que quelque chose en toi attire la lumière."},
-  {"type":"photo","emoji":"💝","title":"Un instant avec toi","imageUrl":"","caption":"Je voulais capturer cet instant pour ne jamais l'oublier."},
-  {"type":"coupon","emoji":"🎵","title":"Bon Cadeau","couponText":"Bon pour 1 slow dans le salon, à n'importe quelle heure du jour ou de la nuit."},
-  {"type":"text","emoji":"🌍","title":"Notre histoire","content":"Chaque histoire d'amour est unique. La nôtre l'est encore plus. Elle a ses propres codes, ses propres blagues, ses propres silences confortables. J'en suis fier."},
-  {"type":"coupon","emoji":"🍦","title":"Bon Cadeau","couponText":"Bon pour 1 sortie glaces, au parfum de ton choix (oui, même si c'est bizarre)."},
-  {"type":"text","emoji":"💙","title":"Les jours sans","content":"Même les jours où on ne se voit pas, tu occupes mes pensées. Un message, une photo, ton nom qui s'affiche — et tu es là, même à distance."},
-  {"type":"photo","emoji":"🏞️","title":"Notre paysage","imageUrl":"","caption":"Partout avec toi devient un endroit magnifique."},
-  {"type":"coupon","emoji":"🫂","title":"Bon Cadeau","couponText":"Bon pour 1 câlin debout, dans la cuisine, sans raison particulière — juste parce que."},
-  {"type":"text","emoji":"🌻","title":"Ce qui me touche","content":"Quand tu penses à me texter juste pour me dire que tu penses à moi. Ces petits riens qui font tout."},
-  {"type":"coupon","emoji":"🧁","title":"Bon Cadeau","couponText":"Bon pour 1 gâteau fait maison, recette de ton choix — je mets le tablier, tu poses les règles."},
-  {"type":"text","emoji":"🎭","title":"Toutes tes facettes","content":"La toi du matin, la toi du soir, la toi qui rigole, la toi qui boude, la toi qui s'emballe pour rien. J'aime toutes tes versions, sans exception."},
-  {"type":"photo","emoji":"🎉","title":"Un jour de bonheur","imageUrl":"","caption":"Je repense à ce moment et je souris à chaque fois."},
-  {"type":"coupon","emoji":"🌙","title":"Bon Cadeau","couponText":"Bon pour 1 nuit de câlins prolongés — réveil sans alarme, café au lit compris."},
-  {"type":"text","emoji":"❤️","title":"Ce que tu mérites","content":"Tu mérites quelqu'un qui te regarde comme si tu étais la huitième merveille du monde. J'essaie d'être cet humain-là, tous les jours."},
-  {"type":"coupon","emoji":"🎁","title":"Bon Cadeau","couponText":"Bon pour 1 cadeau mystère préparé par moi — à réclamer n'importe quand."},
-  {"type":"text","emoji":"🤍","title":"Dans le calme","content":"J'aime qu'on puisse se taire ensemble sans que ce soit gênant. Le silence avec toi est doux. C'est rare, et c'est précieux."},
-  {"type":"photo","emoji":"🌿","title":"Notre bulle","imageUrl":"","caption":"Notre petit monde à nous, loin du bruit."},
-  {"type":"coupon","emoji":"💅","title":"Bon Cadeau","couponText":"Bon pour 1 après-midi beauté/cocooning, tu choisis l'activité, je fournis les snacks."},
-  {"type":"text","emoji":"🛤️","title":"Le chemin qu'on fait","content":"Je ne sais pas où ce chemin nous mène exactement. Mais je sais que marcher à tes côtés, c'est déjà la meilleure destination."},
-  {"type":"coupon","emoji":"🎤","title":"Bon Cadeau","couponText":"Bon pour 1 karaoké privé chez nous — je m'engage à ne pas te juger, même sur les notes les plus hautes."},
-  {"type":"text","emoji":"🌺","title":"Tes mains","content":"Tes mains dans les miennes. Je ne me lasserai jamais de cette sensation-là. C'est bête à dire, mais c'est vrai."},
-  {"type":"photo","emoji":"✈️","title":"Un voyage imaginaire","imageUrl":"","caption":"Ensemble, même les routes les plus ordinaires deviennent une aventure."},
-  {"type":"coupon","emoji":"🍳","title":"Bon Cadeau","couponText":"Bon pour 1 cours de cuisine ensemble — on choisit une recette difficile et on apprend à la faire."},
-  {"type":"text","emoji":"🌠","title":"Sous les étoiles","content":"J'aimerais qu'on prenne plus souvent le temps de regarder les étoiles ensemble. Pas besoin de parler — juste être là, à respirer le même air."},
-  {"type":"coupon","emoji":"🧸","title":"Bon Cadeau","couponText":"Bon pour 1 journée pyjama complète — séries, couverture, interdiction formelle de s'habiller."},
-  {"type":"text","emoji":"💬","title":"Je voulais te dire…","content":"Il y a des choses que j'ai du mal à dire à voix haute parce que les mots semblent toujours trop petits. Mais sache que ce que je ressens pour toi est immense."},
-  {"type":"photo","emoji":"🌇","title":"Un coucher de soleil","imageUrl":"","caption":"Ce soir-là, le ciel avait ta couleur."},
-  {"type":"coupon","emoji":"🤫","title":"Bon Cadeau","couponText":"Bon pour 1 secret partagé — je te raconte quelque chose que personne d'autre ne sait."},
-  {"type":"text","emoji":"🧩","title":"On se complète","content":"Je suis plutôt ceci, tu es plutôt cela. Et ensemble, on forme quelque chose de plus grand que la somme de nos deux parties. C'est de la magie, je crois."},
-  {"type":"coupon","emoji":"🍿","title":"Bon Cadeau","couponText":"Bon pour 1 marathon de ta série préférée — sans que je me plaigne une seule fois."},
-  {"type":"text","emoji":"🌞","title":"Le matin avec toi","content":"Les matins avec toi ont un goût différent. Même quand on est fatigués, même quand il pleut. Il y a quelque chose de doux et de chaud qui commence toujours bien la journée."},
-  {"type":"photo","emoji":"🎊","title":"Une belle journée","imageUrl":"","caption":"Ces moments-là, je veux les garder pour toujours."},
-  {"type":"coupon","emoji":"💌","title":"Bon Cadeau","couponText":"Bon pour 1 lettre d'amour écrite à la main, rien que pour toi."},
-  {"type":"text","emoji":"🌊","title":"Traverser ensemble","content":"Les périodes difficiles m'ont appris quelque chose : avec toi, tout est plus supportable. Tu es mon équilibre quand je penche trop d'un côté."},
-  {"type":"coupon","emoji":"🎨","title":"Bon Cadeau","couponText":"Bon pour 1 activité créative ensemble — peinture, dessin, poterie, ce que tu choisis."},
-  {"type":"text","emoji":"🕊️","title":"La légèreté","content":"Tu m'as appris à ne pas tout prendre trop au sérieux. À rire des petits désastres. Tu as rendu ma vie plus légère, et c'est un cadeau inestimable."},
-  {"type":"photo","emoji":"🌸","title":"Un instant de grâce","imageUrl":"","caption":"La vie est belle, surtout quand tu es dans le cadre."},
-  {"type":"coupon","emoji":"🧭","title":"Bon Cadeau","couponText":"Bon pour 1 balade au hasard — on part sans destination et on voit où on atterrit."},
-  {"type":"text","emoji":"🎶","title":"Notre musique","content":"Il y a ces chansons qui me font penser à toi immédiatement. Quand elles passent quelque part, je ferme les yeux une seconde et tu es là."},
-  {"type":"coupon","emoji":"🍷","title":"Bon Cadeau","couponText":"Bon pour 1 apéro maison romantique — je m'occupe de tout, tu n'as qu'à arriver."},
-  {"type":"text","emoji":"🦋","title":"Tu me fais cet effet-là","content":"Encore maintenant, parfois, quand tu me regardes, j'ai des papillons. Je pensais que ça passait avec le temps. Ça ne passe pas."},
-  {"type":"photo","emoji":"🍂","title":"Les saisons avec toi","imageUrl":"","caption":"Chaque saison avec toi a sa propre magie."},
-  {"type":"coupon","emoji":"🛒","title":"Bon Cadeau","couponText":"Bon pour 1 shopping de ton choix — je porte les sacs et je donne mon avis honnête."},
-  {"type":"text","emoji":"🏡","title":"Chez soi","content":"Chez soi, ce n'est pas forcément un endroit. Parfois c'est une personne. Tu es mon chez-moi à moi."},
-  {"type":"coupon","emoji":"🌙","title":"Bon Cadeau","couponText":"Bon pour 1 soirée \"comme on veut\" — tu décides absolument de tout, du menu à l'heure du coucher."},
-  {"type":"text","emoji":"🎯","title":"Ce que je veux","content":"Je veux continuer à apprendre à te connaître. Parce que plus je te connais, plus je t'aime. Et il me reste tellement à découvrir."},
-  {"type":"photo","emoji":"🌄","title":"Une aurore","imageUrl":"","caption":"Un début de journée que j'ai voulu immortaliser."},
-  {"type":"coupon","emoji":"🫶","title":"Bon Cadeau","couponText":"Bon pour 1 câlin surprise — à utiliser n'importe quand, n'importe où, sans préavis."},
-  {"type":"text","emoji":"💎","title":"Ce que tu vaux","content":"Tu n'as pas besoin de te prouver quoi que ce soit. Pas à moi, pas au monde. Tu es déjà extraordinaire, exactement telle que tu es."},
-  {"type":"coupon","emoji":"🎪","title":"Bon Cadeau","couponText":"Bon pour 1 surprise totale organisée par moi — date et destination secrètes, je m'occupe de tout."},
-  {"type":"text","emoji":"🌷","title":"Chaque saison","content":"En hiver tu es mon feu de cheminée. Au printemps, mon bouquet de fleurs. En été, mon soleil. En automne, ma couleur préférée. Je t'aime en toutes saisons."},
-  {"type":"photo","emoji":"🤝","title":"Ensemble","imageUrl":"","caption":"Parce que tout est plus beau quand on le partage."},
-  {"type":"coupon","emoji":"🍜","title":"Bon Cadeau","couponText":"Bon pour 1 dîner au restaurant de ton choix — tu réserves, je paie, on profite."},
-  {"type":"text","emoji":"🌟","title":"Ta force","content":"Tu es plus forte que tu ne le crois. J'espère que les mots que tu te répètes dans ta tête sont aussi gentils que ceux que tu mérites."},
-  {"type":"coupon","emoji":"📚","title":"Bon Cadeau","couponText":"Bon pour 1 après-midi lecture ensemble — chacun son livre, dans le même silence confortable."},
-  {"type":"text","emoji":"🥂","title":"On fête ça","content":"Il n'y a pas besoin d'une raison spéciale pour célébrer. Le fait qu'on soit là, ensemble, à avancer — c'est déjà suffisant pour trinquer."},
-  {"type":"photo","emoji":"🌃","title":"Une nuit étoilée","imageUrl":"","caption":"Les nuits avec toi ont leurs propres étoiles."},
-  {"type":"coupon","emoji":"💋","title":"Bon Cadeau","couponText":"Bon pour 1 soirée romantique complète — bougies, musique douce, dîner préparé par moi."},
-  {"type":"text","emoji":"🔮","title":"Le futur","content":"Je ne sais pas exactement à quoi ressemblera demain. Mais si tu es dans le tableau, je suis curieux de le vivre. Plus que curieux, en fait."},
-  {"type":"coupon","emoji":"🏖️","title":"Bon Cadeau","couponText":"Bon pour 1 journée plage ou nature — destination et activités au choix, pique-nique inclus."},
-  {"type":"text","emoji":"🎀","title":"Un cadeau invisible","content":"Ce que je t'offre ne tient dans aucune boîte : c'est ma présence, mon attention, mon respect, ma loyauté. Ils sont à toi, sans date d'expiration."},
-  {"type":"photo","emoji":"🌍","title":"Notre monde","imageUrl":"","caption":"Dans ce grand monde, j'ai de la chance de t'avoir trouvée."},
-  {"type":"coupon","emoji":"🎻","title":"Bon Cadeau","couponText":"Bon pour 1 soirée musique live — concert, festival, bar à musique, tu choisis le style."},
-  {"type":"text","emoji":"🌹","title":"Tant de raisons","content":"Si j'avais dû écrire une raison de t'aimer pour chaque case de ce calendrier, j'en aurais trouvé bien plus. Mais je voulais t'en laisser quelques-unes à découvrir toi-même."},
-  {"type":"coupon","emoji":"🧖","title":"Bon Cadeau","couponText":"Bon pour 1 séance bien-être de ton choix — spa, hammam, soin, je finance et t'accompagne si tu veux."},
-  {"type":"text","emoji":"🌙","title":"Bonne nuit, toujours","content":"Même les soirs où on est fâchés, même les soirs où on est fatigués, je veux que tu saches : tu comptes. Tu comptes vraiment."},
-  {"type":"photo","emoji":"💞","title":"Un moment de douceur","imageUrl":"","caption":"La douceur est une force, et tu en es la preuve."},
-  {"type":"coupon","emoji":"🤲","title":"Bon Cadeau","couponText":"Bon pour 1 journée où c'est TOI qui décides de tout — de l'heure du réveil à l'heure du coucher."},
-  {"type":"text","emoji":"🌈","title":"Presque là…","content":"Tu as ouvert 90 cases. 90 petits morceaux de moi que je t'ai offerts. Merci de les avoir reçus avec autant de soin."},
-  {"type":"coupon","emoji":"✈️","title":"Bon Cadeau","couponText":"Bon pour 1 week-end quelque part — destination secrète, valise à faire, aventure garantie."},
-  {"type":"text","emoji":"💌","title":"Une lettre ouverte","content":"Mon amour, si tu lis ces mots, c'est que tu as parcouru un long chemin dans ce calendrier. Je voulais juste te dire que chaque case a été pensée pour toi, avec tout ce que je suis."},
-  {"type":"photo","emoji":"🌺","title":"Notre plus belle photo","imageUrl":"","caption":"Celle-là, je la garde pour toujours."},
-  {"type":"coupon","emoji":"🏡","title":"Bon Cadeau","couponText":"Bon pour 1 soirée \"nid d'amour\" — je transforme le salon en cocon, tu arrives et tu profites."},
-  {"type":"text","emoji":"🌟","title":"Ce que je réalise","content":"En créant ce site, j'ai réalisé une chose : j'aurais pu en faire 1000 cases. Il y a tellement de raisons de t'aimer que ça ne tiendrait jamais dans un calendrier."},
-  {"type":"coupon","emoji":"🎁","title":"Bon Cadeau","couponText":"Bon pour 1 cadeau surprise de valeur, à réclamer quand tu es prête — je l'ai prévu rien que pour toi."},
-  {"type":"text","emoji":"💛","title":"Avant-dernière case…","content":"La case 99. Tu es presque au bout. Avant d'ouvrir la dernière, prends une grande inspiration et sache que tu mérites tout le bonheur du monde."},
-  {"type":"photo","emoji":"🌠","title":"Nous, pour toujours","imageUrl":"","caption":"Notre plus belle histoire, elle commence maintenant."},
-  {"type":"text","emoji":"❤️","title":"Je t'aime","content":"Voilà. Tu as ouvert les 100 cases. Cent petits cadeaux, cent pensées, cent façons de te dire ce que j'éprouve.\n\nJe t'aime.\n\nSimple, vrai, sans condition.\n\nÀ toi, pour toujours. ♡"}
+  {
+    "type": "text",
+    "emoji": "💌",
+    "title": "Bienvenue mon amour",
+    "content": "Bienvenue l'amour de ma vie dans ton petit cadeau. Pour commencer, joyeux 18 ans ma chérie, je suis très heureux de passer cette étape avec toi mon cœur et j'espère qu'on en passera encore beaucoup ensemble. En tout cas voilà ton cadeau : 50 petits mots, photos et autres surprises. Tu peux les ouvrir quand tu veux, donc je te souhaite un bon cadeau. Je t'aime fort d'amour et à l'infini, ma Minimoys. ♡"
+  },
+  {
+    "type": "photo",
+    "emoji": "📸",
+    "title": "Une de nos premières photos",
+    "imageUrl": "",
+    "caption": "Une de nos premières photos… le début de tout. ♡"
+  },
+  {
+    "type": "text",
+    "emoji": "🌟",
+    "title": "Tu m'impressionnes",
+    "content": "Bonjour mon cœur, aujourd'hui je voulais te dire à quel point tu m'impressionnes. Je suis tellement fier de toi, tu m'impressionnes tous les jours dans tous tes exploits, même les plus petits. Ce que tu fais chaque jour — afficher ton magnifique sourire sur ton visage, me rassurer quand j'en ai besoin, m'aider et m'accompagner tout le temps — je t'en suis redevable. Merci pour tout, tu es incroyable mon cœur et ne change jamais. Je t'aime fort."
+  },
+  {
+    "type": "coupon",
+    "emoji": "🤗",
+    "title": "Bon Cadeau",
+    "couponText": "Bon pour des câlins à l'infini, sans condition et sans limite de durée."
+  },
+  {
+    "type": "photo",
+    "emoji": "🏫",
+    "title": "Notre lycée",
+    "imageUrl": "",
+    "caption": "Une première photo dans notre lycée — là où tout a commencé."
+  },
+  {
+    "type": "text",
+    "emoji": "✨",
+    "title": "Tu es magnifique",
+    "content": "Salut c'est encore moi ! Aujourd'hui je voulais te parler de ta beauté. Tu vas sûrement m'en vouloir que je te dise tout ça mon cœur, mais tu es magnifique, sublime, incroyablement belle, rayonnante ! Même dans les moments où toi tu ne te trouves pas belle, je trouve toujours en toi une magnifique fille que j'aime plus que tout au monde et qui est juste sublime (même si tu dis le contraire, c'est vrai !). Donc voilà : TU ES MAGNIFIQUE et je t'aime fort !"
+  },
+  {
+    "type": "photo",
+    "emoji": "🍕",
+    "title": "Notre première pizza sur la plage",
+    "imageUrl": "",
+    "caption": "Notre première pizza sur la plage — un souvenir parfait."
+  },
+  {
+    "type": "text",
+    "emoji": "😊",
+    "title": "Ton sourire",
+    "content": "Ton sourire. Ce sourire qui change tout. Quand il apparaît à mes yeux, le monde autour de moi s'arrête et je me dis que je suis le plus chanceux."
+  },
+  {
+    "type": "coupon",
+    "emoji": "😴",
+    "title": "Bon Cadeau",
+    "couponText": "Bon pour un gros dodo avec ton copain — grasse matinée garantie, téléphone éteint."
+  },
+  {
+    "type": "photo",
+    "emoji": "🌊",
+    "title": "Hyères",
+    "imageUrl": "",
+    "caption": "Notre première plage et balade à Hyères. ♡"
+  },
+  {
+    "type": "text",
+    "emoji": "🌙",
+    "title": "Les nuits avec toi",
+    "content": "Il y a quelque chose de magique dans le fait de s'endormir à côté de toi. Je trouve que ce sont nos meilleures nuits, paisibles et incroyablement belles (même si on ne dort pas énormément)."
+  },
+  {
+    "type": "photo",
+    "emoji": "🌸",
+    "title": "Tes couleurs préférées",
+    "imageUrl": "",
+    "caption": "Tes couleurs préférées avec de magnifiques fleurs — comme toi."
+  },
+  {
+    "type": "coupon",
+    "emoji": "🎬",
+    "title": "Bon Cadeau",
+    "couponText": "Bon pour un ciné avec ton copain — c'est toi qui choisis le film, sans discussion."
+  },
+  {
+    "type": "text",
+    "emoji": "⚓",
+    "title": "Ce que tu m'apprends",
+    "content": "Tu m'apprends à ralentir, à prendre le temps. Dans un monde qui va trop vite, tu es mon ancre. Tu m'apprends à apprécier chaque instant avec toi. Merci mon trésor."
+  },
+  {
+    "type": "photo",
+    "emoji": "🛏️",
+    "title": "Ton deuxième lit",
+    "imageUrl": "",
+    "caption": "Nous dans ton deuxième lit — un de mes endroits préférés au monde."
+  },
+  {
+    "type": "text",
+    "emoji": "🤝",
+    "title": "Une promesse",
+    "content": "Je te promets de toujours essayer de trouver une raison de te faire sourire, même les jours difficiles. Surtout les jours difficiles. Je serai toujours là pour toi parce que je t'aime."
+  },
+  {
+    "type": "coupon",
+    "emoji": "🧸",
+    "title": "Bon Cadeau",
+    "couponText": "Bon pour des papouilles à l'infini — sans limite de temps ni de séance !"
+  },
+  {
+    "type": "photo",
+    "emoji": "🏠",
+    "title": "Ma première fois chez toi",
+    "imageUrl": "",
+    "caption": "Ma première fois chez toi — un souvenir que je garderai toujours."
+  },
+  {
+    "type": "text",
+    "emoji": "🔥",
+    "title": "Ce feu-là",
+    "content": "Il y a une chaleur avec toi que je ne trouve nulle part ailleurs. Une évidence. Quand je suis à tes côtés, je n'ai besoin de rien d'autre. Je t'aime Clémence."
+  },
+  {
+    "type": "photo",
+    "emoji": "💃",
+    "title": "Le bal",
+    "imageUrl": "",
+    "caption": "Un bal avec ma copine — on est trop beauuuu !"
+  },
+  {
+    "type": "coupon",
+    "emoji": "💋",
+    "title": "Bon Cadeau",
+    "couponText": "Bon pour plein de bisous à l'infini — à utiliser sans modération et à toute heure."
+  },
+  {
+    "type": "text",
+    "emoji": "💫",
+    "title": "Tu brilles",
+    "content": "Tu ne te rends pas compte à quel point tu rayonnes. Les gens te regardent, et pas seulement parce que tu es belle, parce que quelque chose en toi attire la lumière. Tu es juste incroyable mon cœur, je t'aime fort."
+  },
+  {
+    "type": "photo",
+    "emoji": "🪞",
+    "title": "Dans ma salle de bain",
+    "imageUrl": "",
+    "caption": "Dans ma salle de bain — même là tu es parfaite."
+  },
+  {
+    "type": "text",
+    "emoji": "💛",
+    "title": "Notre histoire",
+    "content": "Chaque histoire d'amour est unique. La nôtre est encore plus belle. Elle a ses propres codes, ses propres blagues, ses propres silences confortables. J'en suis fier et je suis fier de nous. Je t'aime fort."
+  },
+  {
+    "type": "coupon",
+    "emoji": "🔥",
+    "title": "Bon Cadeau",
+    "couponText": "Bon pour une petite surprise coquine quand tu le désires. 😉 À toi de choisir le moment."
+  },
+  {
+    "type": "photo",
+    "emoji": "🛗",
+    "title": "L'ascenseur",
+    "imageUrl": "",
+    "caption": "L'ascenseur — même les endroits les plus banals deviennent des souvenirs avec toi."
+  },
+  {
+    "type": "text",
+    "emoji": "💙",
+    "title": "Les jours sans toi",
+    "content": "Même les jours où on ne se voit pas, tu occupes mes pensées. Un message, une photo, ton nom qui s'affiche et tu es là, même à distance. Je t'aime d'amour et à l'infini, la Meilleurette !"
+  },
+  {
+    "type": "photo",
+    "emoji": "👕",
+    "title": "Tee-shirts Alma",
+    "imageUrl": "",
+    "caption": "De magnifiques tee-shirts Alma — classe absolue."
+  },
+  {
+    "type": "coupon",
+    "emoji": "🌺",
+    "title": "Bon Cadeau",
+    "couponText": "Bon pour les fleurs de ton choix pour la prochaine fois — tu choisis, je m'occupe du reste."
+  },
+  {
+    "type": "text",
+    "emoji": "🎭",
+    "title": "Toutes tes facettes",
+    "content": "La toi du matin, la toi du soir, la toi qui rigole, la toi qui boude (même si c'est plutôt moi mdr), la toi qui s'emballe pour rien. J'aime toutes tes versions, sans exception. Et je serai toujours là. Je t'aime fort."
+  },
+  {
+    "type": "photo",
+    "emoji": "❤️",
+    "title": "Encore nous",
+    "imageUrl": "",
+    "caption": "Encore nous — parce qu'on ne s'en lasse jamais."
+  },
+  {
+    "type": "text",
+    "emoji": "👑",
+    "title": "Ce que tu mérites",
+    "content": "Tu mérites quelqu'un qui te regarde comme si tu étais la huitième merveille du monde. J'essaie d'être cet humain-là, tous les jours. Car tu es la huitième merveille du monde, voire même la première !"
+  },
+  {
+    "type": "coupon",
+    "emoji": "☕",
+    "title": "Bon Cadeau",
+    "couponText": "Bon pour un petit déjeuner au lit — préparé par moi, avec tout ce que tu aimes, livré directement sous ta couette."
+  },
+  {
+    "type": "photo",
+    "emoji": "🌊",
+    "title": "Nice",
+    "imageUrl": "",
+    "caption": "Nice — avec toi, chaque ville devient plus belle."
+  },
+  {
+    "type": "text",
+    "emoji": "🤍",
+    "title": "Dans le calme",
+    "content": "J'aime qu'on puisse se taire ensemble sans que ce soit gênant. Le silence avec toi est doux. C'est rare, et c'est précieux. Je t'aime infiniment fort."
+  },
+  {
+    "type": "photo",
+    "emoji": "🍽️",
+    "title": "Un resto de salopart",
+    "imageUrl": "",
+    "caption": "Un resto de salopart — même les galères sont belles avec toi."
+  },
+  {
+    "type": "text",
+    "emoji": "🛤️",
+    "title": "Le chemin qu'on fait",
+    "content": "Je ne sais pas où ce chemin nous mène exactement. Mais je sais que ça marchera et que le chemin qu'on parcourt est juste magnifique. Je t'aime mon étoile à moi."
+  },
+  {
+    "type": "coupon",
+    "emoji": "♾️",
+    "title": "Bon Cadeau",
+    "couponText": "Mon amour pour toujours — celui-là, tu n'as même pas besoin de le réclamer. Il est déjà à toi. ♡"
+  },
+  {
+    "type": "photo",
+    "emoji": "🌧️",
+    "title": "L'expo sous la pluie",
+    "imageUrl": "",
+    "caption": "Une superbe expo qui s'est finie trempés sous la pluie — le meilleur souvenir."
+  },
+  {
+    "type": "text",
+    "emoji": "🖐️",
+    "title": "Tes mains",
+    "content": "Tes mains dans les miennes. Je ne me lasserai jamais de cette sensation-là. C'est bête à dire, mais c'est vrai. Je t'aime de toute mon âme, je t'aime fort."
+  },
+  {
+    "type": "photo",
+    "emoji": "🏫",
+    "title": "Encore au lycée",
+    "imageUrl": "",
+    "caption": "Encore nous (toujours au lycée, ceux-là) — nos débuts."
+  },
+  {
+    "type": "text",
+    "emoji": "💬",
+    "title": "Je voulais te dire…",
+    "content": "Il y a des choses que j'ai du mal à dire à voix haute parce que les mots semblent toujours trop petits. Mais sache que ce que je ressens pour toi est immense. Je t'aime immensément fort !"
+  },
+  {
+    "type": "photo",
+    "emoji": "💨",
+    "title": "L'Alamanard",
+    "imageUrl": "",
+    "caption": "L'Alamanard, le vent de salopart — mais on était ensemble, donc c'était parfait."
+  },
+  {
+    "type": "text",
+    "emoji": "☀️",
+    "title": "Le matin avec toi",
+    "content": "Les matins avec toi ont un goût différent. Même quand on est fatigués. Il y a quelque chose de doux et de chaud qui fait que la journée commence toujours bien avec toi."
+  },
+  {
+    "type": "photo",
+    "emoji": "🔭",
+    "title": "Vue de très haut",
+    "imageUrl": "",
+    "caption": "Toujours nous — vue de très haut cette fois-ci mdr."
+  },
+  {
+    "type": "text",
+    "emoji": "🎶",
+    "title": "Notre musique",
+    "content": "Il y a ces chansons qui me font penser à toi immédiatement. Quand elles passent quelque part, je ferme les yeux une seconde et tu es là. Je t'aime fort ma princesse."
+  },
+  {
+    "type": "photo",
+    "emoji": "😘",
+    "title": "Un petit bisou",
+    "imageUrl": "",
+    "caption": "Un petit bisou — et c'est tout le bonheur du monde."
+  },
+  {
+    "type": "text",
+    "emoji": "🏡",
+    "title": "Mon chez-moi",
+    "content": "Chez soi, ce n'est pas forcément un endroit. Parfois c'est une personne. Tu es mon chez-moi à moi. Merci de rendre mon chez-moi si doux et aussi magnifique. Je t'aime fort ma CléClé."
+  },
+  {
+    "type": "photo",
+    "emoji": "💞",
+    "title": "Encore nous, pour finir",
+    "imageUrl": "",
+    "caption": "Et pour finir, encore nous — parce qu'il n'y a pas de meilleure façon de terminer. ♡"
+  },
+  {
+    "type": "text",
+    "emoji": "❤️",
+    "title": "Ce n'est pas la fin",
+    "content": "Bon je crois qu'on y est, la fin de ce cadeau. Je ne sais pas combien de temps il aura duré, peut-être juste 10 minutes mdr, ou peut-être 1 semaine ou 1 mois, voire même 10 ans. En tout cas sache que j'ai très apprécié te faire ce cadeau et j'espère que tu l'as tout autant apprécié que moi. À bientôt pour de nouveaux cadeaux. Je t'aime fort d'amour et à l'infini, ma Minimoys. ♡"
+  }
 ]
 </script>
 
 <script>
 /* ═══════════ ÉTAT ═══════════ */
 const BOXES = JSON.parse(document.getElementById('boxesData').textContent);
+const TOTAL = BOXES.length;
 const SK = 'tresor-opened';
 let opened = [];
 try { opened = JSON.parse(localStorage.getItem(SK)) || []; } catch {}
@@ -379,8 +602,8 @@ function buildGrid() {
     g.appendChild(el);
   });
   const n = opened.length;
-  document.getElementById('prog-text').textContent = `${n} / 100`;
-  document.getElementById('prog-fill').style.width  = `${n}%`;
+  document.getElementById('prog-text').textContent = `${n} / ${TOTAL}`;
+  document.getElementById('prog-fill').style.width  = `${(n/TOTAL)*100}%`;
 }
 
 /* ═══════════ VIEW ═══════════ */
@@ -393,7 +616,7 @@ function openV(i) {
   eEl.textContent = box.emoji; eEl.style.animation='none'; void eEl.offsetHeight; eEl.style.animation='';
   document.getElementById('vTitle').textContent = box.title;
   document.getElementById('vContent').innerHTML = renderV(box);
-  document.getElementById('btnNext').style.display = (!wasO && i<99) ? 'inline-flex' : 'none';
+  document.getElementById('btnNext').style.display = (!wasO && i < TOTAL-1) ? 'inline-flex' : 'none';
   if (!wasO) {
     opened.push(i);
     try { localStorage.setItem(SK, JSON.stringify(opened)); } catch {}
@@ -405,7 +628,7 @@ function openV(i) {
   document.body.style.overflow = 'hidden';
 }
 function closeV() { document.getElementById('vOverlay').classList.remove('open'); document.body.style.overflow=''; }
-function goNext() { if (viewIdx!==null && viewIdx<99) { closeV(); setTimeout(()=>openV(viewIdx+1),200); } }
+function goNext() { if (viewIdx!==null && viewIdx<TOTAL-1) { closeV(); setTimeout(()=>openV(viewIdx+1),200); } }
 
 function renderV(box) {
   if (box.type==='text') return `<p class="m-text">${(box.content||'').replace(/\n/g,'<br>')}</p>`;
@@ -429,7 +652,6 @@ function toggleEdit(on) {
   document.getElementById('edit-banner').classList.toggle('active', on);
   document.getElementById('grid').classList.toggle('edit-mode', on);
 }
-
 function openE(i) {
   editIdx = i; pendingPhoto = null;
   const box = BOXES[i];
@@ -447,25 +669,18 @@ function openE(i) {
   document.body.style.overflow = 'hidden';
 }
 function closeE() { document.getElementById('eOverlay').classList.remove('open'); document.body.style.overflow=''; editIdx=null; pendingPhoto=null; }
-
 function setType(t) {
   ['text','photo','coupon'].forEach(k => {
     document.getElementById(`f${k.charAt(0).toUpperCase()+k.slice(1)}`).style.display = k===t?'block':'none';
     document.querySelector(`.type-tab[data-type="${k}"]`).classList.toggle('active', k===t);
   });
 }
-
 function handlePhoto(input) {
   const file = input.files[0]; if (!file) return;
   const r = new FileReader();
-  r.onload = e => {
-    pendingPhoto = e.target.result;
-    const p = document.getElementById('e-preview');
-    p.src = pendingPhoto; p.className = 'show';
-  };
+  r.onload = e => { pendingPhoto = e.target.result; const p = document.getElementById('e-preview'); p.src = pendingPhoto; p.className = 'show'; };
   r.readAsDataURL(file);
 }
-
 function saveBox() {
   if (editIdx === null) return;
   const box = BOXES[editIdx];
