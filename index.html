@@ -5,814 +5,506 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>💌 Mes 100 Petits Trésors</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script>const EDIT_PASSWORD = "edit";</script><!-- ← CHANGE TON MOT DE PASSE ICI -->
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:        #07020c;
-      --surface:   #140720;
-      --card-lock: #1c0d2a;
-      --card-open: #2a0e1e;
-      --gold:      #c9a055;
-      --gold2:     #f0d080;
-      --rose:      #d4617a;
-      --rose2:     #f2a0b0;
-      --cream:     #f5ede0;
-      --text:      #f0e6d3;
-      --muted:     #7a607a;
-      --radius:    14px;
-      --trans:     0.4s cubic-bezier(.4,0,.2,1);
+      --bg:#07020c; --surface:#140720; --card-lock:#1c0d2a; --card-open:#2a0e1e;
+      --gold:#c9a055; --gold2:#f0d080; --rose:#d4617a; --rose2:#f2a0b0;
+      --cream:#f5ede0; --text:#f0e6d3; --muted:#7a607a;
+      --radius:14px; --trans:0.4s cubic-bezier(.4,0,.2,1);
     }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      min-height: 100vh;
-      background: var(--bg);
-      font-family: 'Nunito', sans-serif;
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    /* ─── STARS BACKGROUND ─── */
+    html { scroll-behavior:smooth; }
+    body { min-height:100vh; background:var(--bg); font-family:'Nunito',sans-serif; color:var(--text); overflow-x:hidden; }
     body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: 0;
+      content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
       background-image:
-        radial-gradient(1px 1px at 10% 15%, rgba(255,255,200,0.6) 0%, transparent 100%),
-        radial-gradient(1px 1px at 25% 35%, rgba(255,220,180,0.5) 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 40% 10%, rgba(255,255,255,0.4) 0%, transparent 100%),
-        radial-gradient(1px 1px at 55% 50%, rgba(255,200,220,0.5) 0%, transparent 100%),
-        radial-gradient(1px 1px at 70% 25%, rgba(255,255,180,0.4) 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 80% 70%, rgba(255,255,255,0.3) 0%, transparent 100%),
-        radial-gradient(1px 1px at 90% 40%, rgba(255,220,200,0.4) 0%, transparent 100%),
-        radial-gradient(1px 1px at 15% 75%, rgba(255,200,255,0.3) 0%, transparent 100%),
-        radial-gradient(1px 1px at 60% 85%, rgba(255,255,200,0.3) 0%, transparent 100%),
-        radial-gradient(1px 1px at 35% 60%, rgba(255,180,200,0.4) 0%, transparent 100%),
-        radial-gradient(1px 1px at 50% 90%, rgba(200,220,255,0.3) 0%, transparent 100%),
-        radial-gradient(2px 2px at 5% 50%, rgba(255,255,220,0.2) 0%, transparent 100%),
-        radial-gradient(1px 1px at 95% 80%, rgba(255,220,240,0.3) 0%, transparent 100%),
-        radial-gradient(1px 1px at 75% 5%, rgba(255,240,200,0.4) 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 30% 90%, rgba(255,255,255,0.2) 0%, transparent 100%);
-      pointer-events: none;
+        radial-gradient(1px 1px at 10% 15%,rgba(255,255,200,.6) 0%,transparent 100%),
+        radial-gradient(1px 1px at 25% 35%,rgba(255,220,180,.5) 0%,transparent 100%),
+        radial-gradient(1.5px 1.5px at 40% 10%,rgba(255,255,255,.4) 0%,transparent 100%),
+        radial-gradient(1px 1px at 55% 50%,rgba(255,200,220,.5) 0%,transparent 100%),
+        radial-gradient(1px 1px at 70% 25%,rgba(255,255,180,.4) 0%,transparent 100%),
+        radial-gradient(1.5px 1.5px at 80% 70%,rgba(255,255,255,.3) 0%,transparent 100%),
+        radial-gradient(1px 1px at 90% 40%,rgba(255,220,200,.4) 0%,transparent 100%),
+        radial-gradient(1px 1px at 15% 75%,rgba(255,200,255,.3) 0%,transparent 100%),
+        radial-gradient(1px 1px at 60% 85%,rgba(255,255,200,.3) 0%,transparent 100%),
+        radial-gradient(1px 1px at 35% 60%,rgba(255,180,200,.4) 0%,transparent 100%),
+        radial-gradient(1px 1px at 50% 90%,rgba(200,220,255,.3) 0%,transparent 100%),
+        radial-gradient(1px 1px at 95% 80%,rgba(255,220,240,.3) 0%,transparent 100%),
+        radial-gradient(1px 1px at 75% 5%,rgba(255,240,200,.4) 0%,transparent 100%),
+        radial-gradient(1.5px 1.5px at 30% 90%,rgba(255,255,255,.2) 0%,transparent 100%);
     }
-
+    /* ─── EDIT BANNER ─── */
+    #edit-banner { display:none; position:sticky; top:0; z-index:50; background:linear-gradient(135deg,#3a2010,#2a1505); border-bottom:1px solid var(--gold); padding:.6rem 1rem; align-items:center; justify-content:space-between; gap:.75rem; flex-wrap:wrap; }
+    #edit-banner.active { display:flex; }
+    .eb-label { font-size:.78rem; font-weight:700; color:var(--gold); letter-spacing:.08em; text-transform:uppercase; }
+    .eb-hint  { font-size:.72rem; color:rgba(240,208,128,.55); }
+    .eb-actions { display:flex; gap:.5rem; margin-left:auto; }
     /* ─── HEADER ─── */
-    .header {
-      position: relative; z-index: 1;
-      text-align: center;
-      padding: 3rem 1rem 1.5rem;
-    }
-
-    .header-hearts {
-      font-size: 1.4rem;
-      letter-spacing: 0.5rem;
-      opacity: 0.7;
-      animation: floatHearts 3s ease-in-out infinite;
-    }
-    @keyframes floatHearts {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-    }
-
-    .header h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.2rem, 6vw, 4rem);
-      font-weight: 300;
-      font-style: italic;
-      color: var(--gold2);
-      line-height: 1.1;
-      margin: 0.4rem 0 0.6rem;
-      text-shadow: 0 0 40px rgba(240,208,128,0.3);
-    }
-
-    .header-sub {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      color: var(--rose2);
-      opacity: 0.85;
-      letter-spacing: 0.04em;
-    }
-
+    .header { position:relative; z-index:1; text-align:center; padding:3rem 1rem 1.5rem; }
+    .header-hearts { font-size:1.4rem; letter-spacing:.5rem; opacity:.7; animation:floatH 3s ease-in-out infinite; }
+    @keyframes floatH { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+    .header h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2.2rem,6vw,4rem); font-weight:300; font-style:italic; color:var(--gold2); line-height:1.1; margin:.4rem 0 .6rem; text-shadow:0 0 40px rgba(240,208,128,.3); }
+    .header-sub { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(1rem,2.5vw,1.25rem); color:var(--rose2); opacity:.85; letter-spacing:.04em; }
     /* ─── PROGRESS ─── */
-    .progress-wrap {
-      position: relative; z-index: 1;
-      max-width: 500px;
-      margin: 1.5rem auto;
-      padding: 0 1.5rem;
-    }
-
-    .progress-label {
-      display: flex; justify-content: space-between;
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-bottom: 6px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .progress-bar-bg {
-      height: 6px;
-      background: rgba(255,255,255,0.07);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-
-    .progress-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--rose), var(--gold));
-      border-radius: 99px;
-      transition: width 0.8s cubic-bezier(.4,0,.2,1);
-      box-shadow: 0 0 10px rgba(212,97,122,0.5);
-    }
-
+    .prog-wrap { position:relative; z-index:1; max-width:500px; margin:1.5rem auto; padding:0 1.5rem; }
+    .prog-lbl { display:flex; justify-content:space-between; font-size:.78rem; color:var(--muted); margin-bottom:6px; letter-spacing:.06em; text-transform:uppercase; }
+    .prog-bg  { height:6px; background:rgba(255,255,255,.07); border-radius:99px; overflow:hidden; }
+    .prog-fill { height:100%; background:linear-gradient(90deg,var(--rose),var(--gold)); border-radius:99px; transition:width .8s cubic-bezier(.4,0,.2,1); box-shadow:0 0 10px rgba(212,97,122,.5); }
     /* ─── GRID ─── */
-    .grid-wrap {
-      position: relative; z-index: 1;
-      max-width: 1100px;
-      margin: 2rem auto 4rem;
-      padding: 0 clamp(0.75rem, 3vw, 2rem);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(clamp(68px, 9vw, 96px), 1fr));
-      gap: clamp(8px, 1.5vw, 14px);
-    }
-
+    .grid-wrap { position:relative; z-index:1; max-width:1100px; margin:2rem auto 4rem; padding:0 clamp(.75rem,3vw,2rem); }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(clamp(68px,9vw,96px),1fr)); gap:clamp(8px,1.5vw,14px); }
     /* ─── BOX ─── */
-    .box {
-      aspect-ratio: 1;
-      border-radius: var(--radius);
-      cursor: default;
-      position: relative;
-      display: flex; align-items: center; justify-content: center;
-      flex-direction: column;
-      gap: 4px;
-      transition: transform var(--trans), box-shadow var(--trans);
-      user-select: none;
-      overflow: hidden;
-    }
-
-    /* Number label */
-    .box-num {
-      font-size: clamp(0.55rem, 1.2vw, 0.75rem);
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      opacity: 0.5;
-    }
-
-    .box-emoji {
-      font-size: clamp(1rem, 2.5vw, 1.6rem);
-      line-height: 1;
-    }
-
-    /* ── LOCKED ── */
-    .box.locked {
-      background: var(--card-lock);
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-    .box.locked .box-num { color: var(--muted); }
-    .box.locked .box-emoji { opacity: 0.25; }
-
-    /* ── AVAILABLE ── */
-    .box.available {
-      background: linear-gradient(135deg, #2a1040 0%, #1a0828 100%);
-      border: 1px solid var(--gold);
-      cursor: pointer;
-      animation: pulse-glow 2s ease-in-out infinite;
-      box-shadow: 0 0 20px rgba(201,160,85,0.25), inset 0 0 20px rgba(201,160,85,0.05);
-    }
-    .box.available .box-num { color: var(--gold); }
-    .box.available .box-emoji { opacity: 1; }
-    .box.available:hover {
-      transform: scale(1.08) translateY(-3px);
-      box-shadow: 0 8px 30px rgba(201,160,85,0.4), inset 0 0 20px rgba(201,160,85,0.1);
-    }
-    .box.available:active { transform: scale(0.97); }
-
-    @keyframes pulse-glow {
-      0%,100% { box-shadow: 0 0 15px rgba(201,160,85,0.2), inset 0 0 15px rgba(201,160,85,0.04); }
-      50%      { box-shadow: 0 0 28px rgba(201,160,85,0.4), inset 0 0 24px rgba(201,160,85,0.09); }
-    }
-
-    /* ── OPENED ── */
-    .box.opened {
-      background: linear-gradient(135deg, #2d0e1a 0%, #1e0a12 100%);
-      border: 1px solid rgba(212,97,122,0.3);
-      cursor: pointer;
-    }
-    .box.opened .box-num { color: var(--rose2); opacity: 0.6; }
-    .box.opened .box-emoji { opacity: 0.7; }
-    .box.opened:hover {
-      transform: scale(1.04);
-      box-shadow: 0 4px 20px rgba(212,97,122,0.2);
-    }
-
-    /* ── OPEN ANIMATION ── */
-    @keyframes box-pop {
-      0%   { transform: scale(1); }
-      40%  { transform: scale(1.18) rotate(3deg); }
-      70%  { transform: scale(0.95) rotate(-1deg); }
-      100% { transform: scale(1); }
-    }
-    .box.opening { animation: box-pop 0.5s cubic-bezier(.4,0,.2,1) forwards; }
-
-    /* ─── MODAL ─── */
-    .modal-overlay {
-      position: fixed; inset: 0; z-index: 100;
-      background: rgba(7,2,12,0.88);
-      backdrop-filter: blur(12px);
-      display: flex; align-items: center; justify-content: center;
-      padding: 1rem;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.35s ease;
-    }
-    .modal-overlay.open {
-      opacity: 1; pointer-events: all;
-    }
-
-    .modal {
-      position: relative;
-      background: linear-gradient(160deg, #200d30 0%, #150820 50%, #1e0a16 100%);
-      border: 1px solid rgba(201,160,85,0.25);
-      border-radius: 24px;
-      padding: clamp(1.5rem, 4vw, 2.5rem);
-      max-width: 520px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 60px rgba(201,160,85,0.07);
-      transform: scale(0.9) translateY(20px);
-      transition: transform 0.35s cubic-bezier(.34,1.56,.64,1);
-    }
-    .modal-overlay.open .modal {
-      transform: scale(1) translateY(0);
-    }
-
-    .modal-close {
-      position: absolute; top: 1rem; right: 1rem;
-      background: rgba(255,255,255,0.07);
-      border: none; border-radius: 50%;
-      width: 36px; height: 36px;
-      color: var(--muted);
-      font-size: 1.1rem; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s, color 0.2s;
-    }
-    .modal-close:hover { background: rgba(212,97,122,0.2); color: var(--rose2); }
-
-    .modal-badge {
-      display: inline-block;
-      font-size: 0.7rem; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--gold);
-      border: 1px solid rgba(201,160,85,0.3);
-      border-radius: 99px;
-      padding: 3px 12px;
-      margin-bottom: 1rem;
-    }
-
-    .modal-emoji {
-      font-size: 3rem;
-      display: block;
-      text-align: center;
-      margin-bottom: 0.5rem;
-      animation: emoji-bounce 0.6s cubic-bezier(.34,1.56,.64,1);
-    }
-    @keyframes emoji-bounce {
-      from { transform: scale(0) rotate(-20deg); }
-      to   { transform: scale(1) rotate(0); }
-    }
-
-    .modal-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.5rem, 4vw, 2.2rem);
-      font-style: italic;
-      font-weight: 400;
-      color: var(--gold2);
-      text-align: center;
-      margin-bottom: 1.2rem;
-      line-height: 1.2;
-    }
-
-    /* Text content */
-    .modal-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.05rem, 2.5vw, 1.25rem);
-      font-style: italic;
-      color: var(--cream);
-      line-height: 1.8;
-      text-align: center;
-      opacity: 0.9;
-    }
-
-    /* Photo content */
-    .modal-photo {
-      width: 100%;
-      border-radius: 14px;
-      overflow: hidden;
-      margin-bottom: 1rem;
-      aspect-ratio: 4/3;
-      background: rgba(255,255,255,0.04);
-      display: flex; align-items: center; justify-content: center;
-      border: 1px dashed rgba(201,160,85,0.2);
-    }
-    .modal-photo img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      border-radius: 14px;
-    }
-    .modal-photo-placeholder {
-      color: var(--muted);
-      font-size: 0.85rem;
-      text-align: center;
-      padding: 1rem;
-    }
-
-    /* Coupon content */
-    .coupon {
-      background: rgba(255,255,255,0.03);
-      border: 2px dashed rgba(201,160,85,0.35);
-      border-radius: 16px;
-      padding: 1.5rem;
-      text-align: center;
-      position: relative;
-    }
-    .coupon::before, .coupon::after {
-      content: '✦';
-      color: var(--gold);
-      opacity: 0.4;
-      font-size: 0.7rem;
-      position: absolute;
-      top: 50%; transform: translateY(-50%);
-    }
-    .coupon::before { left: -1px; }
-    .coupon::after  { right: -1px; }
-
-    .coupon-label {
-      font-size: 0.65rem; font-weight: 700;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--rose);
-      margin-bottom: 0.6rem;
-    }
-    .coupon-main {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.3rem, 4vw, 1.8rem);
-      font-style: italic;
-      color: var(--cream);
-      line-height: 1.3;
-    }
-    .coupon-footer {
-      margin-top: 0.6rem;
-      font-size: 0.72rem;
-      color: var(--muted);
-    }
-
-    /* Caption under photo */
-    .modal-caption {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1.05rem;
-      color: var(--rose2);
-      text-align: center;
-      margin-top: 0.8rem;
-      opacity: 0.85;
-    }
-
-    /* Divider */
-    .modal-divider {
-      width: 60px; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin: 1.2rem auto;
-    }
-
-    /* Nav buttons */
-    .modal-nav {
-      display: flex;
-      gap: 0.75rem;
-      margin-top: 1.5rem;
-      justify-content: center;
-    }
-    .btn {
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      padding: 0.55rem 1.4rem;
-      border-radius: 99px;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .btn:active { transform: scale(0.96); }
-
-    .btn-close {
-      background: rgba(255,255,255,0.06);
-      color: var(--muted);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .btn-close:hover { background: rgba(255,255,255,0.1); color: var(--text); }
-
-    .btn-next {
-      background: linear-gradient(135deg, var(--rose) 0%, #b84060 100%);
-      color: white;
-      box-shadow: 0 4px 20px rgba(212,97,122,0.35);
-    }
-    .btn-next:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,97,122,0.45); }
-
-    /* Confetti */
-    .confetti-piece {
-      position: fixed;
-      width: 8px; height: 8px;
-      border-radius: 2px;
-      pointer-events: none;
-      z-index: 200;
-      animation: confetti-fall linear forwards;
-    }
-    @keyframes confetti-fall {
-      0%   { opacity: 1; transform: translateY(0) rotate(0deg); }
-      100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
-    }
-
-    /* Scrollbar */
-    .modal::-webkit-scrollbar { width: 4px; }
-    .modal::-webkit-scrollbar-track { background: transparent; }
-    .modal::-webkit-scrollbar-thumb { background: rgba(201,160,85,0.2); border-radius: 2px; }
-
+    .box { aspect-ratio:1; border-radius:var(--radius); cursor:default; position:relative; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:4px; transition:transform var(--trans),box-shadow var(--trans); user-select:none; overflow:hidden; }
+    .box-num   { font-size:clamp(.55rem,1.2vw,.75rem); font-weight:700; letter-spacing:.04em; opacity:.5; }
+    .box-emoji { font-size:clamp(1rem,2.5vw,1.6rem); line-height:1; }
+    .box.locked    { background:var(--card-lock); border:1px solid rgba(255,255,255,.05); }
+    .box.locked .box-num   { color:var(--muted); }
+    .box.locked .box-emoji { opacity:.25; }
+    .box.available { background:linear-gradient(135deg,#2a1040 0%,#1a0828 100%); border:1px solid var(--gold); cursor:pointer; animation:pulse-glow 2s ease-in-out infinite; box-shadow:0 0 20px rgba(201,160,85,.25),inset 0 0 20px rgba(201,160,85,.05); }
+    .box.available .box-num { color:var(--gold); }
+    .box.available:hover  { transform:scale(1.08) translateY(-3px); box-shadow:0 8px 30px rgba(201,160,85,.4),inset 0 0 20px rgba(201,160,85,.1); }
+    .box.available:active { transform:scale(.97); }
+    @keyframes pulse-glow { 0%,100%{box-shadow:0 0 15px rgba(201,160,85,.2),inset 0 0 15px rgba(201,160,85,.04)} 50%{box-shadow:0 0 28px rgba(201,160,85,.4),inset 0 0 24px rgba(201,160,85,.09)} }
+    .box.opened { background:linear-gradient(135deg,#2d0e1a 0%,#1e0a12 100%); border:1px solid rgba(212,97,122,.3); cursor:pointer; }
+    .box.opened .box-num   { color:var(--rose2); opacity:.6; }
+    .box.opened .box-emoji { opacity:.7; }
+    .box.opened:hover { transform:scale(1.04); box-shadow:0 4px 20px rgba(212,97,122,.2); }
+    @keyframes box-pop { 0%{transform:scale(1)} 40%{transform:scale(1.18) rotate(3deg)} 70%{transform:scale(.95) rotate(-1deg)} 100%{transform:scale(1)} }
+    .box.opening { animation:box-pop .5s cubic-bezier(.4,0,.2,1) forwards; }
+    /* Edit mode */
+    .edit-mode .box { cursor:pointer!important; animation:none!important; }
+    .edit-mode .box::after { content:'✏️'; position:absolute; top:4px; right:5px; font-size:clamp(.5rem,1.5vw,.75rem); opacity:0; transition:opacity .2s; pointer-events:none; }
+    .edit-mode .box:hover::after { opacity:1; }
+    .edit-mode .box:hover { transform:scale(1.05); box-shadow:0 0 0 2px var(--gold); }
+    /* ─── MODAL BASE ─── */
+    .overlay { position:fixed; inset:0; z-index:100; background:rgba(7,2,12,.88); backdrop-filter:blur(12px); display:flex; align-items:center; justify-content:center; padding:1rem; opacity:0; pointer-events:none; transition:opacity .35s ease; }
+    .overlay.open { opacity:1; pointer-events:all; }
+    .modal { position:relative; background:linear-gradient(160deg,#200d30 0%,#150820 50%,#1e0a16 100%); border:1px solid rgba(201,160,85,.25); border-radius:24px; padding:clamp(1.5rem,4vw,2.5rem); max-width:520px; width:100%; max-height:90vh; overflow-y:auto; box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(201,160,85,.07); transform:scale(.9) translateY(20px); transition:transform .35s cubic-bezier(.34,1.56,.64,1); }
+    .overlay.open .modal { transform:scale(1) translateY(0); }
+    .modal::-webkit-scrollbar { width:4px; }
+    .modal::-webkit-scrollbar-thumb { background:rgba(201,160,85,.2); border-radius:2px; }
+    .x-btn { position:absolute; top:1rem; right:1rem; background:rgba(255,255,255,.07); border:none; border-radius:50%; width:36px; height:36px; color:var(--muted); font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s,color .2s; }
+    .x-btn:hover { background:rgba(212,97,122,.2); color:var(--rose2); }
+    /* ─── VIEW MODAL CONTENT ─── */
+    .m-badge { display:inline-block; font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(201,160,85,.3); border-radius:99px; padding:3px 12px; margin-bottom:1rem; }
+    .m-emoji { font-size:3rem; display:block; text-align:center; margin-bottom:.5rem; animation:ebouce .6s cubic-bezier(.34,1.56,.64,1); }
+    @keyframes ebouce { from{transform:scale(0) rotate(-20deg)} to{transform:scale(1) rotate(0)} }
+    .m-title { font-family:'Cormorant Garamond',serif; font-size:clamp(1.5rem,4vw,2.2rem); font-style:italic; font-weight:400; color:var(--gold2); text-align:center; margin-bottom:1.2rem; line-height:1.2; }
+    .m-text  { font-family:'Cormorant Garamond',serif; font-size:clamp(1.05rem,2.5vw,1.25rem); font-style:italic; color:var(--cream); line-height:1.8; text-align:center; opacity:.9; }
+    .m-photo { width:100%; border-radius:14px; overflow:hidden; margin-bottom:1rem; aspect-ratio:4/3; background:rgba(255,255,255,.04); display:flex; align-items:center; justify-content:center; border:1px dashed rgba(201,160,85,.2); }
+    .m-photo img { width:100%; height:100%; object-fit:cover; border-radius:14px; }
+    .m-placeholder { color:var(--muted); font-size:.85rem; text-align:center; padding:1rem; }
+    .m-caption { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.05rem; color:var(--rose2); text-align:center; margin-top:.8rem; opacity:.85; }
+    .coupon { background:rgba(255,255,255,.03); border:2px dashed rgba(201,160,85,.35); border-radius:16px; padding:1.5rem; text-align:center; position:relative; }
+    .coupon::before,.coupon::after { content:'✦'; color:var(--gold); opacity:.4; font-size:.7rem; position:absolute; top:50%; transform:translateY(-50%); }
+    .coupon::before{left:-1px;} .coupon::after{right:-1px;}
+    .coupon-lbl  { font-size:.65rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--rose); margin-bottom:.6rem; }
+    .coupon-main { font-family:'Cormorant Garamond',serif; font-size:clamp(1.3rem,4vw,1.8rem); font-style:italic; color:var(--cream); line-height:1.3; }
+    .coupon-foot { margin-top:.6rem; font-size:.72rem; color:var(--muted); }
+    .m-divider { width:60px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:1.2rem auto; }
+    .m-nav { display:flex; gap:.75rem; margin-top:1.5rem; justify-content:center; flex-wrap:wrap; }
+    /* ─── EDIT MODAL ─── */
+    .e-section { margin-bottom:1.1rem; }
+    .e-label { font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:.4rem; display:block; }
+    .e-input,.e-textarea { width:100%; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:10px; color:var(--text); font-family:'Nunito',sans-serif; font-size:.9rem; padding:.6rem .9rem; outline:none; transition:border-color .2s; }
+    .e-input:focus,.e-textarea:focus { border-color:var(--gold); }
+    .e-textarea { resize:vertical; min-height:100px; line-height:1.6; }
+    .type-tabs { display:flex; gap:.5rem; }
+    .type-tab { flex:1; padding:.5rem .3rem; border-radius:10px; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.04); color:var(--muted); font-size:.78rem; font-weight:700; cursor:pointer; text-align:center; transition:all .2s; }
+    .type-tab.active { background:rgba(201,160,85,.15); border-color:var(--gold); color:var(--gold); }
+    .upload-zone { border:2px dashed rgba(201,160,85,.3); border-radius:12px; padding:1.5rem; text-align:center; cursor:pointer; transition:border-color .2s,background .2s; }
+    .upload-zone:hover { border-color:var(--gold); background:rgba(201,160,85,.05); }
+    .upload-zone .u-icon { font-size:2rem; margin-bottom:.4rem; }
+    .upload-zone .u-text { font-size:.8rem; color:var(--muted); }
+    #e-preview { width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; margin-top:.8rem; display:none; border:1px solid rgba(201,160,85,.2); }
+    #e-preview.show { display:block; }
+    /* ─── BUTTONS ─── */
+    .btn { font-family:'Nunito',sans-serif; font-size:.82rem; font-weight:700; letter-spacing:.06em; padding:.55rem 1.4rem; border-radius:99px; border:none; cursor:pointer; transition:transform .2s,box-shadow .2s; }
+    .btn:active { transform:scale(.96); }
+    .btn-ghost { background:rgba(255,255,255,.06); color:var(--muted); border:1px solid rgba(255,255,255,.08); }
+    .btn-ghost:hover { background:rgba(255,255,255,.1); color:var(--text); }
+    .btn-rose { background:linear-gradient(135deg,var(--rose) 0%,#b84060 100%); color:white; box-shadow:0 4px 20px rgba(212,97,122,.35); }
+    .btn-rose:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(212,97,122,.45); }
+    .btn-gold { background:linear-gradient(135deg,#a07020,var(--gold)); color:#0a0308; font-weight:800; }
+    .btn-gold:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(201,160,85,.4); }
+    .btn-sm { font-size:.75rem; padding:.4rem 1rem; }
     /* ─── FOOTER ─── */
-    .footer {
-      position: relative; z-index: 1;
-      text-align: center;
-      padding: 2rem 1rem 3rem;
-      font-size: 0.8rem;
-      color: var(--muted);
-      letter-spacing: 0.06em;
-    }
-    .footer span { color: var(--rose); }
+    .footer { position:relative; z-index:1; text-align:center; padding:2rem 1rem 1rem; font-size:.8rem; color:var(--muted); letter-spacing:.06em; }
+    .footer span { color:var(--rose); }
+    .edit-trigger { display:block; margin:1.2rem auto 2rem; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:99px; color:rgba(255,255,255,.18); font-size:.68rem; font-weight:600; padding:.3rem .9rem; cursor:pointer; transition:all .25s; letter-spacing:.06em; width:fit-content; }
+    .edit-trigger:hover { color:var(--gold); border-color:rgba(201,160,85,.3); background:rgba(201,160,85,.06); }
+    /* ─── TOAST ─── */
+    .toast { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%) translateY(80px); background:#1a4a2a; border:1px solid #2d9e5a; border-radius:12px; padding:.75rem 1.5rem; font-size:.85rem; font-weight:600; color:#7effa0; z-index:300; transition:transform .4s cubic-bezier(.34,1.56,.64,1); white-space:nowrap; pointer-events:none; }
+    .toast.show { transform:translateX(-50%) translateY(0); }
+    /* ─── CONFETTI ─── */
+    .cp { position:fixed; pointer-events:none; z-index:200; animation:cffall linear forwards; }
+    @keyframes cffall { 0%{opacity:1;transform:translateY(0) rotate(0)} 100%{opacity:0;transform:translateY(100vh) rotate(720deg)} }
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <div class="header-hearts">♡ ♡ ♡</div>
-    <h1>Mes 100 Petits Trésors</h1>
-    <p class="header-sub">Ouvre-les dans l'ordre, un à un, comme autant de petits moments qui t'appartiennent.</p>
+<!-- EDIT BANNER -->
+<div id="edit-banner">
+  <div>
+    <div class="eb-label">✏️ Mode Édition actif</div>
+    <div class="eb-hint">Clique sur n'importe quelle case pour la modifier</div>
   </div>
+  <div class="eb-actions">
+    <button class="btn btn-gold btn-sm" onclick="downloadSite()">⬇ Télécharger le site</button>
+    <button class="btn btn-ghost btn-sm" onclick="toggleEdit(false)">Quitter</button>
+  </div>
+</div>
 
-  <div class="progress-wrap">
-    <div class="progress-label">
-      <span>Progression</span>
-      <span id="prog-text">0 / 100</span>
+<div class="header">
+  <div class="header-hearts">♡ ♡ ♡</div>
+  <h1>Mes 100 Petits Trésors</h1>
+  <p class="header-sub">Ouvre-les dans l'ordre, un à un, comme autant de petits moments qui t'appartiennent.</p>
+</div>
+
+<div class="prog-wrap">
+  <div class="prog-lbl"><span>Progression</span><span id="prog-text">0 / 100</span></div>
+  <div class="prog-bg"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+</div>
+
+<div class="grid-wrap"><div class="grid" id="grid"></div></div>
+
+<div class="footer">
+  Créé avec <span>♥</span> rien que pour toi
+  <button class="edit-trigger" onclick="askPw()">⚙ Mode édition</button>
+</div>
+
+<!-- VIEW MODAL -->
+<div class="overlay" id="vOverlay">
+  <div class="modal">
+    <button class="x-btn" onclick="closeV()">✕</button>
+    <div class="m-badge" id="vBadge"></div>
+    <span class="m-emoji" id="vEmoji"></span>
+    <h2 class="m-title" id="vTitle"></h2>
+    <div class="m-divider"></div>
+    <div id="vContent"></div>
+    <div class="m-nav">
+      <button class="btn btn-ghost" onclick="closeV()">Fermer</button>
+      <button class="btn btn-rose" id="btnNext" style="display:none" onclick="goNext()">Suivant →</button>
     </div>
-    <div class="progress-bar-bg">
-      <div class="progress-bar-fill" id="prog-fill" style="width:0%"></div>
-    </div>
   </div>
+</div>
 
-  <div class="grid-wrap">
-    <div class="grid" id="grid"></div>
-  </div>
+<!-- EDIT MODAL -->
+<div class="overlay" id="eOverlay">
+  <div class="modal" style="max-width:540px">
+    <button class="x-btn" onclick="closeE()">✕</button>
+    <div class="m-badge" id="eBadge"></div>
 
-  <!-- MODAL -->
-  <div class="modal-overlay" id="modal-overlay">
-    <div class="modal" id="modal">
-      <button class="modal-close" id="modal-close-btn" title="Fermer">✕</button>
-      <div class="modal-badge" id="modal-badge">Trésor n°1</div>
-      <span class="modal-emoji" id="modal-emoji">💌</span>
-      <h2 class="modal-title" id="modal-title">Titre</h2>
-      <div class="modal-divider"></div>
-      <div id="modal-content"></div>
-      <div class="modal-nav">
-        <button class="btn btn-close" id="btn-close">Fermer</button>
-        <button class="btn btn-next" id="btn-next" style="display:none">Suivant →</button>
+    <div class="e-section">
+      <span class="e-label">Type de contenu</span>
+      <div class="type-tabs">
+        <div class="type-tab active" data-type="text"   onclick="setType('text')">💌 Texte</div>
+        <div class="type-tab"        data-type="photo"  onclick="setType('photo')">📸 Photo</div>
+        <div class="type-tab"        data-type="coupon" onclick="setType('coupon')">🎁 Bon cadeau</div>
       </div>
     </div>
-  </div>
 
-  <div class="footer">Créé avec <span>♥</span> rien que pour toi</div>
+    <div style="display:flex;gap:.75rem;margin-bottom:1.1rem">
+      <div style="flex:0 0 70px">
+        <span class="e-label">Emoji</span>
+        <input class="e-input" id="eEmoji" maxlength="4" style="text-align:center;font-size:1.4rem">
+      </div>
+      <div style="flex:1">
+        <span class="e-label">Titre</span>
+        <input class="e-input" id="eTitle" placeholder="Titre de la case">
+      </div>
+    </div>
+
+    <div id="fText" class="e-section">
+      <span class="e-label">Message</span>
+      <textarea class="e-textarea" id="eContent" placeholder="Écris ton message ici…"></textarea>
+    </div>
+
+    <div id="fPhoto" class="e-section" style="display:none">
+      <span class="e-label">Photo</span>
+      <div class="upload-zone" onclick="document.getElementById('eFile').click()">
+        <input type="file" id="eFile" accept="image/*" style="display:none" onchange="handlePhoto(this)">
+        <div class="u-icon">📷</div>
+        <div class="u-text">Clique pour choisir une photo depuis ton appareil</div>
+      </div>
+      <img id="e-preview" alt="Aperçu">
+      <div style="margin-top:.8rem">
+        <span class="e-label">Légende (optionnel)</span>
+        <input class="e-input" id="eCaption" placeholder="Ex : Un moment que je n'oublierai jamais…">
+      </div>
+    </div>
+
+    <div id="fCoupon" class="e-section" style="display:none">
+      <span class="e-label">Texte du bon cadeau</span>
+      <textarea class="e-textarea" id="eCoupon" placeholder="Ex : Bon pour 1 câlin de 10 minutes, sans condition." style="min-height:80px"></textarea>
+    </div>
+
+    <div class="m-nav">
+      <button class="btn btn-ghost" onclick="closeE()">Annuler</button>
+      <button class="btn btn-rose" onclick="saveBox()">💾 Sauvegarder</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✅ Téléchargé ! Réupload-le sur GitHub.</div>
+
+<!-- DONNÉES DES CASES -->
+<script type="application/json" id="boxesData">
+[
+  {"type":"text","emoji":"💌","title":"Pour commencer…","content":"Bienvenue dans ce petit espace que j'ai créé rien que pour toi. Chaque case est un bout de moi, une pensée, un souvenir, un cadeau. Ouvre-les quand tu veux — il n'y a pas de règles, juste de l'amour."},
+  {"type":"coupon","emoji":"🤗","title":"Bon Cadeau","couponText":"Bon pour 1 câlin de 10 minutes minimum, sans condition, à utiliser quand tu veux."},
+  {"type":"text","emoji":"✨","title":"Ce que j'aime chez toi","content":"Ton sourire. Ce sourire qui change tout. Quand il apparaît, le monde autour de toi s'arrête et je me dis que je suis le plus chanceux."},
+  {"type":"photo","emoji":"📸","title":"Un souvenir à nous","imageUrl":"","caption":"Un moment que je n'oublierai jamais."},
+  {"type":"coupon","emoji":"🎬","title":"Bon Cadeau","couponText":"Bon pour 1 soirée ciné de ton choix — ton film, tes snacks, ton plaid, et moi à côté."},
+  {"type":"text","emoji":"🌙","title":"Les nuits avec toi","content":"Il y a quelque chose de magique dans le fait de s'endormir à côté de toi. Tu fais des petits bruits en dormant que je trouve absolument adorables."},
+  {"type":"coupon","emoji":"🛁","title":"Bon Cadeau","couponText":"Bon pour 1 bain bien chaud préparé par moi, avec bougies, mousses et tout le tralala."},
+  {"type":"text","emoji":"💛","title":"Le moment où j'ai compris","content":"Je me souviens exactement du moment où j'ai su que tu comptais vraiment pour moi. C'était un truc tout simple — un éclat de rire, un regard — et quelque chose en moi a basculé."},
+  {"type":"photo","emoji":"🌅","title":"Notre endroit préféré","imageUrl":"","caption":"Ici, avec toi, je me sens chez moi."},
+  {"type":"coupon","emoji":"☕","title":"Bon Cadeau","couponText":"Bon pour 1 petit-déjeuner au lit, préparé par moi, avec tout ce que tu aimes."},
+  {"type":"text","emoji":"🌸","title":"Petite liste d'amour","content":"Les choses que tu fais et que j'adore :\n\n→ Quand tu ris à gorge déployée\n→ Quand tu fais semblant d'être fâchée\n→ Tes \"hm\" quand tu réfléchis\n→ Ta façon de te lover contre moi"},
+  {"type":"coupon","emoji":"💆","title":"Bon Cadeau","couponText":"Bon pour 1 massage de 30 minutes, où tu veux, quand tu veux — sans condition."},
+  {"type":"text","emoji":"🌈","title":"Nos différences","content":"On n'est pas pareils, et c'est exactement ce que j'aime. Tu me surprends, tu m'apprends, tu me fais voir les choses autrement. Avec toi, je grandis."},
+  {"type":"photo","emoji":"🤳","title":"Ma photo préférée de nous","imageUrl":"","caption":"La première fois que j'ai vu cette photo, j'ai souri pendant une heure."},
+  {"type":"coupon","emoji":"🍕","title":"Bon Cadeau","couponText":"Bon pour 1 soirée pizza maison — on fait la pâte ensemble, tu choisis les garnitures."},
+  {"type":"text","emoji":"🌊","title":"Ce que tu m'apprends","content":"Tu m'apprends à ralentir, à prendre le temps. Dans un monde qui va trop vite, tu es mon ancre. Avec toi, je respire différemment."},
+  {"type":"coupon","emoji":"🎮","title":"Bon Cadeau","couponText":"Bon pour 1 après-midi de ton choix — parce que ton bonheur, c'est ma priorité."},
+  {"type":"text","emoji":"💫","title":"Une promesse","content":"Je te promets de toujours trouver une raison de te faire sourire, même les jours difficiles. Surtout les jours difficiles."},
+  {"type":"photo","emoji":"🌺","title":"Ce jour-là","imageUrl":"","caption":"Un jour que je garderai toujours dans un coin de ma mémoire."},
+  {"type":"coupon","emoji":"🧸","title":"Bon Cadeau","couponText":"Bon pour 1 heure de papouilles sans interruption — téléphone éteint, monde mis en pause."},
+  {"type":"text","emoji":"🔥","title":"Ce feu-là","content":"Il y a une chaleur avec toi que je ne trouve nulle part ailleurs. Une évidence. Quand je suis à tes côtés, je n'ai besoin de rien d'autre."},
+  {"type":"coupon","emoji":"🚗","title":"Bon Cadeau","couponText":"Bon pour 1 sortie surprise organisée par moi — tu ne sais pas où, tu n'as qu'à te laisser emmener."},
+  {"type":"text","emoji":"🌟","title":"Tu brilles","content":"Tu ne te rends pas compte à quel point tu rayonnes. Les gens te regardent, et pas seulement parce que tu es belle — parce que quelque chose en toi attire la lumière."},
+  {"type":"photo","emoji":"💝","title":"Un instant avec toi","imageUrl":"","caption":"Je voulais capturer cet instant pour ne jamais l'oublier."},
+  {"type":"coupon","emoji":"🎵","title":"Bon Cadeau","couponText":"Bon pour 1 slow dans le salon, à n'importe quelle heure du jour ou de la nuit."},
+  {"type":"text","emoji":"🌍","title":"Notre histoire","content":"Chaque histoire d'amour est unique. La nôtre l'est encore plus. Elle a ses propres codes, ses propres blagues, ses propres silences confortables. J'en suis fier."},
+  {"type":"coupon","emoji":"🍦","title":"Bon Cadeau","couponText":"Bon pour 1 sortie glaces, au parfum de ton choix (oui, même si c'est bizarre)."},
+  {"type":"text","emoji":"💙","title":"Les jours sans","content":"Même les jours où on ne se voit pas, tu occupes mes pensées. Un message, une photo, ton nom qui s'affiche — et tu es là, même à distance."},
+  {"type":"photo","emoji":"🏞️","title":"Notre paysage","imageUrl":"","caption":"Partout avec toi devient un endroit magnifique."},
+  {"type":"coupon","emoji":"🫂","title":"Bon Cadeau","couponText":"Bon pour 1 câlin debout, dans la cuisine, sans raison particulière — juste parce que."},
+  {"type":"text","emoji":"🌻","title":"Ce qui me touche","content":"Quand tu penses à me texter juste pour me dire que tu penses à moi. Ces petits riens qui font tout."},
+  {"type":"coupon","emoji":"🧁","title":"Bon Cadeau","couponText":"Bon pour 1 gâteau fait maison, recette de ton choix — je mets le tablier, tu poses les règles."},
+  {"type":"text","emoji":"🎭","title":"Toutes tes facettes","content":"La toi du matin, la toi du soir, la toi qui rigole, la toi qui boude, la toi qui s'emballe pour rien. J'aime toutes tes versions, sans exception."},
+  {"type":"photo","emoji":"🎉","title":"Un jour de bonheur","imageUrl":"","caption":"Je repense à ce moment et je souris à chaque fois."},
+  {"type":"coupon","emoji":"🌙","title":"Bon Cadeau","couponText":"Bon pour 1 nuit de câlins prolongés — réveil sans alarme, café au lit compris."},
+  {"type":"text","emoji":"❤️","title":"Ce que tu mérites","content":"Tu mérites quelqu'un qui te regarde comme si tu étais la huitième merveille du monde. J'essaie d'être cet humain-là, tous les jours."},
+  {"type":"coupon","emoji":"🎁","title":"Bon Cadeau","couponText":"Bon pour 1 cadeau mystère préparé par moi — à réclamer n'importe quand."},
+  {"type":"text","emoji":"🤍","title":"Dans le calme","content":"J'aime qu'on puisse se taire ensemble sans que ce soit gênant. Le silence avec toi est doux. C'est rare, et c'est précieux."},
+  {"type":"photo","emoji":"🌿","title":"Notre bulle","imageUrl":"","caption":"Notre petit monde à nous, loin du bruit."},
+  {"type":"coupon","emoji":"💅","title":"Bon Cadeau","couponText":"Bon pour 1 après-midi beauté/cocooning, tu choisis l'activité, je fournis les snacks."},
+  {"type":"text","emoji":"🛤️","title":"Le chemin qu'on fait","content":"Je ne sais pas où ce chemin nous mène exactement. Mais je sais que marcher à tes côtés, c'est déjà la meilleure destination."},
+  {"type":"coupon","emoji":"🎤","title":"Bon Cadeau","couponText":"Bon pour 1 karaoké privé chez nous — je m'engage à ne pas te juger, même sur les notes les plus hautes."},
+  {"type":"text","emoji":"🌺","title":"Tes mains","content":"Tes mains dans les miennes. Je ne me lasserai jamais de cette sensation-là. C'est bête à dire, mais c'est vrai."},
+  {"type":"photo","emoji":"✈️","title":"Un voyage imaginaire","imageUrl":"","caption":"Ensemble, même les routes les plus ordinaires deviennent une aventure."},
+  {"type":"coupon","emoji":"🍳","title":"Bon Cadeau","couponText":"Bon pour 1 cours de cuisine ensemble — on choisit une recette difficile et on apprend à la faire."},
+  {"type":"text","emoji":"🌠","title":"Sous les étoiles","content":"J'aimerais qu'on prenne plus souvent le temps de regarder les étoiles ensemble. Pas besoin de parler — juste être là, à respirer le même air."},
+  {"type":"coupon","emoji":"🧸","title":"Bon Cadeau","couponText":"Bon pour 1 journée pyjama complète — séries, couverture, interdiction formelle de s'habiller."},
+  {"type":"text","emoji":"💬","title":"Je voulais te dire…","content":"Il y a des choses que j'ai du mal à dire à voix haute parce que les mots semblent toujours trop petits. Mais sache que ce que je ressens pour toi est immense."},
+  {"type":"photo","emoji":"🌇","title":"Un coucher de soleil","imageUrl":"","caption":"Ce soir-là, le ciel avait ta couleur."},
+  {"type":"coupon","emoji":"🤫","title":"Bon Cadeau","couponText":"Bon pour 1 secret partagé — je te raconte quelque chose que personne d'autre ne sait."},
+  {"type":"text","emoji":"🧩","title":"On se complète","content":"Je suis plutôt ceci, tu es plutôt cela. Et ensemble, on forme quelque chose de plus grand que la somme de nos deux parties. C'est de la magie, je crois."},
+  {"type":"coupon","emoji":"🍿","title":"Bon Cadeau","couponText":"Bon pour 1 marathon de ta série préférée — sans que je me plaigne une seule fois."},
+  {"type":"text","emoji":"🌞","title":"Le matin avec toi","content":"Les matins avec toi ont un goût différent. Même quand on est fatigués, même quand il pleut. Il y a quelque chose de doux et de chaud qui commence toujours bien la journée."},
+  {"type":"photo","emoji":"🎊","title":"Une belle journée","imageUrl":"","caption":"Ces moments-là, je veux les garder pour toujours."},
+  {"type":"coupon","emoji":"💌","title":"Bon Cadeau","couponText":"Bon pour 1 lettre d'amour écrite à la main, rien que pour toi."},
+  {"type":"text","emoji":"🌊","title":"Traverser ensemble","content":"Les périodes difficiles m'ont appris quelque chose : avec toi, tout est plus supportable. Tu es mon équilibre quand je penche trop d'un côté."},
+  {"type":"coupon","emoji":"🎨","title":"Bon Cadeau","couponText":"Bon pour 1 activité créative ensemble — peinture, dessin, poterie, ce que tu choisis."},
+  {"type":"text","emoji":"🕊️","title":"La légèreté","content":"Tu m'as appris à ne pas tout prendre trop au sérieux. À rire des petits désastres. Tu as rendu ma vie plus légère, et c'est un cadeau inestimable."},
+  {"type":"photo","emoji":"🌸","title":"Un instant de grâce","imageUrl":"","caption":"La vie est belle, surtout quand tu es dans le cadre."},
+  {"type":"coupon","emoji":"🧭","title":"Bon Cadeau","couponText":"Bon pour 1 balade au hasard — on part sans destination et on voit où on atterrit."},
+  {"type":"text","emoji":"🎶","title":"Notre musique","content":"Il y a ces chansons qui me font penser à toi immédiatement. Quand elles passent quelque part, je ferme les yeux une seconde et tu es là."},
+  {"type":"coupon","emoji":"🍷","title":"Bon Cadeau","couponText":"Bon pour 1 apéro maison romantique — je m'occupe de tout, tu n'as qu'à arriver."},
+  {"type":"text","emoji":"🦋","title":"Tu me fais cet effet-là","content":"Encore maintenant, parfois, quand tu me regardes, j'ai des papillons. Je pensais que ça passait avec le temps. Ça ne passe pas."},
+  {"type":"photo","emoji":"🍂","title":"Les saisons avec toi","imageUrl":"","caption":"Chaque saison avec toi a sa propre magie."},
+  {"type":"coupon","emoji":"🛒","title":"Bon Cadeau","couponText":"Bon pour 1 shopping de ton choix — je porte les sacs et je donne mon avis honnête."},
+  {"type":"text","emoji":"🏡","title":"Chez soi","content":"Chez soi, ce n'est pas forcément un endroit. Parfois c'est une personne. Tu es mon chez-moi à moi."},
+  {"type":"coupon","emoji":"🌙","title":"Bon Cadeau","couponText":"Bon pour 1 soirée \"comme on veut\" — tu décides absolument de tout, du menu à l'heure du coucher."},
+  {"type":"text","emoji":"🎯","title":"Ce que je veux","content":"Je veux continuer à apprendre à te connaître. Parce que plus je te connais, plus je t'aime. Et il me reste tellement à découvrir."},
+  {"type":"photo","emoji":"🌄","title":"Une aurore","imageUrl":"","caption":"Un début de journée que j'ai voulu immortaliser."},
+  {"type":"coupon","emoji":"🫶","title":"Bon Cadeau","couponText":"Bon pour 1 câlin surprise — à utiliser n'importe quand, n'importe où, sans préavis."},
+  {"type":"text","emoji":"💎","title":"Ce que tu vaux","content":"Tu n'as pas besoin de te prouver quoi que ce soit. Pas à moi, pas au monde. Tu es déjà extraordinaire, exactement telle que tu es."},
+  {"type":"coupon","emoji":"🎪","title":"Bon Cadeau","couponText":"Bon pour 1 surprise totale organisée par moi — date et destination secrètes, je m'occupe de tout."},
+  {"type":"text","emoji":"🌷","title":"Chaque saison","content":"En hiver tu es mon feu de cheminée. Au printemps, mon bouquet de fleurs. En été, mon soleil. En automne, ma couleur préférée. Je t'aime en toutes saisons."},
+  {"type":"photo","emoji":"🤝","title":"Ensemble","imageUrl":"","caption":"Parce que tout est plus beau quand on le partage."},
+  {"type":"coupon","emoji":"🍜","title":"Bon Cadeau","couponText":"Bon pour 1 dîner au restaurant de ton choix — tu réserves, je paie, on profite."},
+  {"type":"text","emoji":"🌟","title":"Ta force","content":"Tu es plus forte que tu ne le crois. J'espère que les mots que tu te répètes dans ta tête sont aussi gentils que ceux que tu mérites."},
+  {"type":"coupon","emoji":"📚","title":"Bon Cadeau","couponText":"Bon pour 1 après-midi lecture ensemble — chacun son livre, dans le même silence confortable."},
+  {"type":"text","emoji":"🥂","title":"On fête ça","content":"Il n'y a pas besoin d'une raison spéciale pour célébrer. Le fait qu'on soit là, ensemble, à avancer — c'est déjà suffisant pour trinquer."},
+  {"type":"photo","emoji":"🌃","title":"Une nuit étoilée","imageUrl":"","caption":"Les nuits avec toi ont leurs propres étoiles."},
+  {"type":"coupon","emoji":"💋","title":"Bon Cadeau","couponText":"Bon pour 1 soirée romantique complète — bougies, musique douce, dîner préparé par moi."},
+  {"type":"text","emoji":"🔮","title":"Le futur","content":"Je ne sais pas exactement à quoi ressemblera demain. Mais si tu es dans le tableau, je suis curieux de le vivre. Plus que curieux, en fait."},
+  {"type":"coupon","emoji":"🏖️","title":"Bon Cadeau","couponText":"Bon pour 1 journée plage ou nature — destination et activités au choix, pique-nique inclus."},
+  {"type":"text","emoji":"🎀","title":"Un cadeau invisible","content":"Ce que je t'offre ne tient dans aucune boîte : c'est ma présence, mon attention, mon respect, ma loyauté. Ils sont à toi, sans date d'expiration."},
+  {"type":"photo","emoji":"🌍","title":"Notre monde","imageUrl":"","caption":"Dans ce grand monde, j'ai de la chance de t'avoir trouvée."},
+  {"type":"coupon","emoji":"🎻","title":"Bon Cadeau","couponText":"Bon pour 1 soirée musique live — concert, festival, bar à musique, tu choisis le style."},
+  {"type":"text","emoji":"🌹","title":"Tant de raisons","content":"Si j'avais dû écrire une raison de t'aimer pour chaque case de ce calendrier, j'en aurais trouvé bien plus. Mais je voulais t'en laisser quelques-unes à découvrir toi-même."},
+  {"type":"coupon","emoji":"🧖","title":"Bon Cadeau","couponText":"Bon pour 1 séance bien-être de ton choix — spa, hammam, soin, je finance et t'accompagne si tu veux."},
+  {"type":"text","emoji":"🌙","title":"Bonne nuit, toujours","content":"Même les soirs où on est fâchés, même les soirs où on est fatigués, je veux que tu saches : tu comptes. Tu comptes vraiment."},
+  {"type":"photo","emoji":"💞","title":"Un moment de douceur","imageUrl":"","caption":"La douceur est une force, et tu en es la preuve."},
+  {"type":"coupon","emoji":"🤲","title":"Bon Cadeau","couponText":"Bon pour 1 journée où c'est TOI qui décides de tout — de l'heure du réveil à l'heure du coucher."},
+  {"type":"text","emoji":"🌈","title":"Presque là…","content":"Tu as ouvert 90 cases. 90 petits morceaux de moi que je t'ai offerts. Merci de les avoir reçus avec autant de soin."},
+  {"type":"coupon","emoji":"✈️","title":"Bon Cadeau","couponText":"Bon pour 1 week-end quelque part — destination secrète, valise à faire, aventure garantie."},
+  {"type":"text","emoji":"💌","title":"Une lettre ouverte","content":"Mon amour, si tu lis ces mots, c'est que tu as parcouru un long chemin dans ce calendrier. Je voulais juste te dire que chaque case a été pensée pour toi, avec tout ce que je suis."},
+  {"type":"photo","emoji":"🌺","title":"Notre plus belle photo","imageUrl":"","caption":"Celle-là, je la garde pour toujours."},
+  {"type":"coupon","emoji":"🏡","title":"Bon Cadeau","couponText":"Bon pour 1 soirée \"nid d'amour\" — je transforme le salon en cocon, tu arrives et tu profites."},
+  {"type":"text","emoji":"🌟","title":"Ce que je réalise","content":"En créant ce site, j'ai réalisé une chose : j'aurais pu en faire 1000 cases. Il y a tellement de raisons de t'aimer que ça ne tiendrait jamais dans un calendrier."},
+  {"type":"coupon","emoji":"🎁","title":"Bon Cadeau","couponText":"Bon pour 1 cadeau surprise de valeur, à réclamer quand tu es prête — je l'ai prévu rien que pour toi."},
+  {"type":"text","emoji":"💛","title":"Avant-dernière case…","content":"La case 99. Tu es presque au bout. Avant d'ouvrir la dernière, prends une grande inspiration et sache que tu mérites tout le bonheur du monde."},
+  {"type":"photo","emoji":"🌠","title":"Nous, pour toujours","imageUrl":"","caption":"Notre plus belle histoire, elle commence maintenant."},
+  {"type":"text","emoji":"❤️","title":"Je t'aime","content":"Voilà. Tu as ouvert les 100 cases. Cent petits cadeaux, cent pensées, cent façons de te dire ce que j'éprouve.\n\nJe t'aime.\n\nSimple, vrai, sans condition.\n\nÀ toi, pour toujours. ♡"}
+]
+</script>
 
 <script>
-/* ═══════════════════════════════════════════════════════
-   ✏️  MODIFIE ICI TES 100 CASES — C'EST TON SEUL FICHIER À ÉDITER
-   
-   Types disponibles :
-     'text'   → Un message d'amour (remplis "content")
-     'photo'  → Une photo (mets le fichier dans un dossier "photos/" et remplis "imageUrl")
-     'coupon' → Un bon cadeau (remplis "couponText")
-   
-   Pour les photos, crée un dossier "photos" à côté de index.html sur GitHub
-   et mets le chemin : "photos/ma-photo.jpg"
-═══════════════════════════════════════════════════════ */
-const BOXES = [
-  // ── 1 à 10 ──────────────────────────────────────────
-  { type:'text',   emoji:'💌', title:'Pour commencer…',          content:'Bienvenue dans ce petit espace que j\'ai créé rien que pour toi. Chaque case est un bout de moi, une pensée, un souvenir, un cadeau. Ouvre-les quand tu veux — il n\'y a pas de règles, juste de l\'amour.' },
-  { type:'coupon', emoji:'🤗', title:'Bon Cadeau',               couponText:'Bon pour 1 câlin de 10 minutes minimum, sans condition, à utiliser quand tu veux.' },
-  { type:'text',   emoji:'✨', title:'Ce que j\'aime chez toi',  content:'Ton sourire. Ce sourire qui change tout. Quand il apparaît, le monde autour de toi s\'arrête et je me dis que je suis le plus chanceux.' },
-  { type:'photo',  emoji:'📸', title:'Un souvenir à nous',       imageUrl:'photos/04.jpg', caption:'Un moment que je n\'oublierai jamais.' },
-  { type:'coupon', emoji:'🎬', title:'Bon Cadeau',               couponText:'Bon pour 1 soirée ciné de ton choix — ton film, tes snacks, ton plaid, et moi à côté.' },
-  { type:'text',   emoji:'🌙', title:'Les nuits avec toi',       content:'Il y a quelque chose de magique dans le fait de s\'endormir à côté de toi. Tu fais des petits bruits en dormant que je trouve absolument adorables, et je me permets de te le dire ici.' },
-  { type:'coupon', emoji:'🛁', title:'Bon Cadeau',               couponText:'Bon pour 1 bain bien chaud préparé par moi, avec bougies, mousses et tout le tralala.' },
-  { type:'text',   emoji:'💛', title:'Le moment où j\'ai compris', content:'Je me souviens exactement du moment où j\'ai su que tu comptais vraiment pour moi. C\'était un truc tout simple — un éclat de rire, un regard — et quelque chose en moi a basculé.' },
-  { type:'photo',  emoji:'🌅', title:'Notre endroit préféré',    imageUrl:'photos/09.jpg', caption:'Ici, avec toi, je me sens chez moi.' },
-  { type:'coupon', emoji:'☕', title:'Bon Cadeau',               couponText:'Bon pour 1 petit-déjeuner au lit, préparé par moi, avec tout ce que tu aimes.' },
+/* ═══════════ ÉTAT ═══════════ */
+const BOXES = JSON.parse(document.getElementById('boxesData').textContent);
+const SK = 'tresor-opened';
+let opened = [];
+try { opened = JSON.parse(localStorage.getItem(SK)) || []; } catch {}
+let viewIdx = null, editIdx = null, editMode = false, pendingPhoto = null;
 
-  // ── 11 à 20 ─────────────────────────────────────────
-  { type:'text',   emoji:'🌸', title:'Petite liste d\'amour',    content:'Les choses que tu fais et que j\'adore :\n\n→ Quand tu ris à gorge déployée\n→ Quand tu fais semblant d\'être fâchée\n→ Tes "hm" quand tu réfléchis\n→ Ta façon de te lover contre moi' },
-  { type:'coupon', emoji:'💆', title:'Bon Cadeau',               couponText:'Bon pour 1 massage de 30 minutes, où tu veux, quand tu veux — sans condition.' },
-  { type:'text',   emoji:'🌈', title:'Nos différences',          content:'On n\'est pas pareils, et c\'est exactement ce que j\'aime. Tu me surprends, tu m\'apprends, tu me fais voir les choses autrement. Avec toi, je grandis.' },
-  { type:'photo',  emoji:'🤳', title:'Ma photo préférée de nous', imageUrl:'photos/14.jpg', caption:'La première fois que j\'ai vu cette photo, j\'ai souri pendant une heure.' },
-  { type:'coupon', emoji:'🍕', title:'Bon Cadeau',               couponText:'Bon pour 1 soirée pizza maison — on fait la pâte ensemble, tu choisis les garnitures.' },
-  { type:'text',   emoji:'🌊', title:'Ce que tu m\'apprends',    content:'Tu m\'apprends à ralentir, à prendre le temps. Dans un monde qui va trop vite, tu es mon ancre. Avec toi, je respire différemment.' },
-  { type:'coupon', emoji:'🎮', title:'Bon Cadeau',               couponText:'Bon pour 1 après-midi de ton choix — parce que ton bonheur, c\'est ma priorité.' },
-  { type:'text',   emoji:'💫', title:'Une promesse',             content:'Je te promets de toujours trouver une raison de te faire sourire, même les jours difficiles. Surtout les jours difficiles.' },
-  { type:'photo',  emoji:'🌺', title:'Ce jour-là',               imageUrl:'photos/19.jpg', caption:'Un jour que je garderai toujours dans un coin de ma mémoire.' },
-  { type:'coupon', emoji:'🧸', title:'Bon Cadeau',               couponText:'Bon pour 1 heure de papouilles sans interruption — téléphone éteint, monde mis en pause.' },
-
-  // ── 21 à 30 ─────────────────────────────────────────
-  { type:'text',   emoji:'🔥', title:'Ce feu-là',                content:'Il y a une chaleur avec toi que je ne trouve nulle part ailleurs. Une évidence. Quand je suis à tes côtés, je n\'ai besoin de rien d\'autre.' },
-  { type:'coupon', emoji:'🚗', title:'Bon Cadeau',               couponText:'Bon pour 1 sortie surprise organisée par moi — tu ne sais pas où, tu n\'as qu\'à te laisser emmener.' },
-  { type:'text',   emoji:'🌟', title:'Tu brilles',               content:'Tu ne te rends pas compte à quel point tu rayonnes. Les gens te regardent, et pas seulement parce que tu es belle — parce que quelque chose en toi attire la lumière.' },
-  { type:'photo',  emoji:'💝', title:'Un instant avec toi',      imageUrl:'photos/24.jpg', caption:'Je voulais capturer cet instant pour ne jamais l\'oublier.' },
-  { type:'coupon', emoji:'🎵', title:'Bon Cadeau',               couponText:'Bon pour 1 slow dans le salon, à n\'importe quelle heure du jour ou de la nuit.' },
-  { type:'text',   emoji:'🌍', title:'Notre histoire',           content:'Chaque histoire d\'amour est unique. La nôtre l\'est encore plus. Elle a ses propres codes, ses propres blagues, ses propres silences confortables. J\'en suis fier.' },
-  { type:'coupon', emoji:'🍦', title:'Bon Cadeau',               couponText:'Bon pour 1 sortie glaces, au parfum de ton choix (oui, même si c\'est bizarre).' },
-  { type:'text',   emoji:'💙', title:'Les jours sans',           content:'Même les jours où on ne se voit pas, tu occupes mes pensées. Un message, une photo, ton nom qui s\'affiche — et tu es là, même à distance.' },
-  { type:'photo',  emoji:'🏞️', title:'Notre paysage',            imageUrl:'photos/29.jpg', caption:'Partout avec toi devient un endroit magnifique.' },
-  { type:'coupon', emoji:'🫂', title:'Bon Cadeau',               couponText:'Bon pour 1 câlin debout, dans la cuisine, sans raison particulière — juste parce que.' },
-
-  // ── 31 à 40 ─────────────────────────────────────────
-  { type:'text',   emoji:'🌻', title:'Ce qui me touche',         content:'Quand tu penses à me textoser juste pour me dire que tu penses à moi. Ces petits riens qui font tout.' },
-  { type:'coupon', emoji:'🧁', title:'Bon Cadeau',               couponText:'Bon pour 1 gâteau fait maison, recette de ton choix — je mets le tablier, tu poses les règles.' },
-  { type:'text',   emoji:'🎭', title:'Toutes tes facettes',      content:'La toi du matin, la toi du soir, la toi qui rigole, la toi qui boude, la toi qui s\'emballe pour rien. J\'aime toutes tes versions, sans exception.' },
-  { type:'photo',  emoji:'🎉', title:'Un jour de bonheur',       imageUrl:'photos/34.jpg', caption:'Je repense à ce moment et je souris à chaque fois.' },
-  { type:'coupon', emoji:'🌙', title:'Bon Cadeau',               couponText:'Bon pour 1 nuit de câlins prolongés — réveil sans alarme, café au lit compris.' },
-  { type:'text',   emoji:'❤️', title:'Ce que tu mérites',        content:'Tu mérites quelqu\'un qui te regarde comme si tu étais la huitième merveille du monde. J\'essaie d\'être cet humain-là, tous les jours.' },
-  { type:'coupon', emoji:'🎁', title:'Bon Cadeau',               couponText:'Bon pour 1 cadeau mystère préparé par moi — à réclamer n\'importe quand.' },
-  { type:'text',   emoji:'🤍', title:'Dans le calme',            content:'J\'aime qu\'on puisse se taire ensemble sans que ce soit gênant. Le silence avec toi est doux. C\'est rare, et c\'est précieux.' },
-  { type:'photo',  emoji:'🌿', title:'Notre bulle',              imageUrl:'photos/39.jpg', caption:'Notre petit monde à nous, loin du bruit.' },
-  { type:'coupon', emoji:'💅', title:'Bon Cadeau',               couponText:'Bon pour 1 après-midi beauté/cocooning, tu choisis l\'activité, je fournis les snacks.' },
-
-  // ── 41 à 50 ─────────────────────────────────────────
-  { type:'text',   emoji:'🛤️', title:'Le chemin qu\'on fait',    content:'Je ne sais pas où ce chemin nous mène exactement. Mais je sais que marcher à tes côtés, c\'est déjà la meilleure destination.' },
-  { type:'coupon', emoji:'🎤', title:'Bon Cadeau',               couponText:'Bon pour 1 karaoké privé chez nous — je m\'engage à ne pas te juger, même sur les notes les plus hautes.' },
-  { type:'text',   emoji:'🌺', title:'Tes mains',                content:'Tes mains dans les miennes. Je ne me lasserai jamais de cette sensation-là. C\'est bête à dire, mais c\'est vrai.' },
-  { type:'photo',  emoji:'✈️', title:'Un voyage imaginaire',     imageUrl:'photos/44.jpg', caption:'Ensemble, même les routes les plus ordinaires deviennent une aventure.' },
-  { type:'coupon', emoji:'🍳', title:'Bon Cadeau',               couponText:'Bon pour 1 cours de cuisine ensemble — on choisit une recette difficile et on apprend à la faire.' },
-  { type:'text',   emoji:'🌠', title:'Sous les étoiles',         content:'J\'aimerais qu\'on prenne plus souvent le temps de regarder les étoiles ensemble. Pas besoin de parler — juste être là, à respirer le même air.' },
-  { type:'coupon', emoji:'🧸', title:'Bon Cadeau',               couponText:'Bon pour 1 journée pyjama complète — séries, couverture, interdiction formelle de s\'habiller.' },
-  { type:'text',   emoji:'💬', title:'Je voulais te dire…',      content:'Il y a des choses que j\'ai du mal à dire à voix haute parce que les mots semblent toujours trop petits. Mais sache que ce que je ressens pour toi est immense.' },
-  { type:'photo',  emoji:'🌇', title:'Un coucher de soleil',     imageUrl:'photos/49.jpg', caption:'Ce soir-là, le ciel avait ta couleur.' },
-  { type:'coupon', emoji:'🤫', title:'Bon Cadeau',               couponText:'Bon pour 1 secret partagé — je te raconte quelque chose que personne d\'autre ne sait.' },
-
-  // ── 51 à 60 ─────────────────────────────────────────
-  { type:'text',   emoji:'🧩', title:'On se complète',           content:'Je suis plutôt ceci, tu es plutôt cela. Et ensemble, on forme quelque chose de plus grand que la somme de nos deux parties. C\'est de la magie, je crois.' },
-  { type:'coupon', emoji:'🍿', title:'Bon Cadeau',               couponText:'Bon pour 1 marathon de ta série préférée — sans que je me plaigne une seule fois.' },
-  { type:'text',   emoji:'🌞', title:'Le matin avec toi',        content:'Les matins avec toi ont un goût différent. Même quand on est fatigués, même quand il pleut. Il y a quelque chose de doux et de chaud qui commence toujours bien la journée.' },
-  { type:'photo',  emoji:'🎊', title:'Une belle journée',        imageUrl:'photos/54.jpg', caption:'Ces moments-là, je veux les garder pour toujours.' },
-  { type:'coupon', emoji:'💌', title:'Bon Cadeau',               couponText:'Bon pour 1 lettre d\'amour écrite à la main, rien que pour toi.' },
-  { type:'text',   emoji:'🌊', title:'Traverser ensemble',       content:'Les périodes difficiles m\'ont appris quelque chose : avec toi, tout est plus supportable. Tu es mon équilibre quand je penche trop d\'un côté.' },
-  { type:'coupon', emoji:'🎨', title:'Bon Cadeau',               couponText:'Bon pour 1 activité créative ensemble — peinture, dessin, poterie, ce que tu choisis.' },
-  { type:'text',   emoji:'🕊️', title:'La légèreté',              content:'Tu m\'as appris à ne pas tout prendre trop au sérieux. À rire des petits désastres. Tu as rendu ma vie plus légère, et c\'est un cadeau inestimable.' },
-  { type:'photo',  emoji:'🌸', title:'Un instant de grâce',      imageUrl:'photos/59.jpg', caption:'La vie est belle, surtout quand tu es dans le cadre.' },
-  { type:'coupon', emoji:'🧭', title:'Bon Cadeau',               couponText:'Bon pour 1 balade au hasard — on part sans destination et on voit où on atterrit.' },
-
-  // ── 61 à 70 ─────────────────────────────────────────
-  { type:'text',   emoji:'🎶', title:'Notre musique',            content:'Il y a ces chansons qui me font penser à toi immédiatement. Quand elles passent quelque part, je ferme les yeux une seconde et tu es là.' },
-  { type:'coupon', emoji:'🍷', title:'Bon Cadeau',               couponText:'Bon pour 1 apéro maison romantique — je m\'occupe de tout, tu n\'as qu\'à arriver.' },
-  { type:'text',   emoji:'🦋', title:'Tu me fais cet effet-là',  content:'Encore maintenant, parfois, quand tu me regardes, j\'ai des papillons. Je pensais que ça passait avec le temps. Ça ne passe pas.' },
-  { type:'photo',  emoji:'🍂', title:'Les saisons avec toi',     imageUrl:'photos/64.jpg', caption:'Chaque saison avec toi a sa propre magie.' },
-  { type:'coupon', emoji:'🛒', title:'Bon Cadeau',               couponText:'Bon pour 1 shopping de ton choix — je porte les sacs et je donne mon avis honnête.' },
-  { type:'text',   emoji:'🏡', title:'Chez soi',                 content:'Chez soi, ce n\'est pas forcément un endroit. Parfois c\'est une personne. Tu es mon chez-moi à moi.' },
-  { type:'coupon', emoji:'🌙', title:'Bon Cadeau',               couponText:'Bon pour 1 soirée "comme on veut" — tu décides absolument de tout, du menu à l\'heure du coucher.' },
-  { type:'text',   emoji:'🎯', title:'Ce que je veux',           content:'Je veux continuer à apprendre à te connaître. Parce que plus je te connais, plus je t\'aime. Et il me reste tellement à découvrir.' },
-  { type:'photo',  emoji:'🌄', title:'Une aurore',               imageUrl:'photos/69.jpg', caption:'Un début de journée que j\'ai voulu immortaliser.' },
-  { type:'coupon', emoji:'🫶', title:'Bon Cadeau',               couponText:'Bon pour 1 câlin surprise — à utiliser n\'importe quand, n\'importe où, sans préavis.' },
-
-  // ── 71 à 80 ─────────────────────────────────────────
-  { type:'text',   emoji:'💎', title:'Ce que tu vaux',           content:'Tu n\'as pas besoin de te prouver quoi que ce soit. Pas à moi, pas au monde. Tu es déjà extraordinaire, exactement telle que tu es.' },
-  { type:'coupon', emoji:'🎪', title:'Bon Cadeau',               couponText:'Bon pour 1 surprise totale organisée par moi — date et destination secrètes, je m\'occupe de tout.' },
-  { type:'text',   emoji:'🌷', title:'Chaque saison',            content:'En hiver tu es mon feu de cheminée. Au printemps, mon bouquet de fleurs. En été, mon soleil. En automne, ma couleur préférée. Je t\'aime en toutes saisons.' },
-  { type:'photo',  emoji:'🤝', title:'Ensemble',                 imageUrl:'photos/74.jpg', caption:'Parce que tout est plus beau quand on le partage.' },
-  { type:'coupon', emoji:'🍜', title:'Bon Cadeau',               couponText:'Bon pour 1 dîner au restaurant de ton choix — tu réserves, je paie, on profite.' },
-  { type:'text',   emoji:'🌟', title:'Ta force',                 content:'Tu es plus forte que tu ne le crois. J\'espère que les mots que tu te répètes dans ta tête sont aussi gentils que ceux que tu mérites.' },
-  { type:'coupon', emoji:'📚', title:'Bon Cadeau',               couponText:'Bon pour 1 après-midi lecture ensemble — chacun son livre, dans le même silence confortable.' },
-  { type:'text',   emoji:'🥂', title:'On fête ça',               content:'Il n\'y a pas besoin d\'une raison spéciale pour célébrer. Le fait qu\'on soit là, ensemble, à avancer — c\'est déjà suffisant pour trinquer.' },
-  { type:'photo',  emoji:'🌃', title:'Une nuit étoilée',         imageUrl:'photos/79.jpg', caption:'Les nuits avec toi ont leurs propres étoiles.' },
-  { type:'coupon', emoji:'💋', title:'Bon Cadeau',               couponText:'Bon pour 1 soirée romantique complète — bougies, musique douce, dîner préparé par moi.' },
-
-  // ── 81 à 90 ─────────────────────────────────────────
-  { type:'text',   emoji:'🔮', title:'Le futur',                 content:'Je ne sais pas exactement à quoi ressemblera demain. Mais si tu es dans le tableau, je suis curieux de le vivre. Plus que curieux, en fait.' },
-  { type:'coupon', emoji:'🏖️', title:'Bon Cadeau',               couponText:'Bon pour 1 journée plage ou nature — destination et activités au choix, pique-nique inclus.' },
-  { type:'text',   emoji:'🎀', title:'Un cadeau invisible',      content:'Ce que je t\'offre ne tient dans aucune boîte : c\'est ma présence, mon attention, mon respect, ma loyauté. Ils sont à toi, sans date d\'expiration.' },
-  { type:'photo',  emoji:'🌍', title:'Notre monde',              imageUrl:'photos/84.jpg', caption:'Dans ce grand monde, j\'ai de la chance de t\'avoir trouvée.' },
-  { type:'coupon', emoji:'🎻', title:'Bon Cadeau',               couponText:'Bon pour 1 soirée musique live — concert, festival, bar à musique, tu choisis le style.' },
-  { type:'text',   emoji:'🌹', title:'84 raisons',               content:'Si j\'avais dû écrire une raison de t\'aimer pour chaque case de ce calendrier, j\'en aurais trouvé bien plus. Mais je voulais t\'en laisser quelques-unes à découvrir toi-même.' },
-  { type:'coupon', emoji:'🧖', title:'Bon Cadeau',               couponText:'Bon pour 1 séance bien-être de ton choix — spa, hammam, soin, je finance et t\'accompagne si tu veux.' },
-  { type:'text',   emoji:'🌙', title:'Bonne nuit, toujours',     content:'Même les soirs où on est fâchés, même les soirs où on est fatigués, je veux que tu saches : tu comptes. Tu comptes vraiment.' },
-  { type:'photo',  emoji:'💞', title:'Un moment de douceur',     imageUrl:'photos/89.jpg', caption:'La douceur est une force, et tu en es la preuve.' },
-  { type:'coupon', emoji:'🤲', title:'Bon Cadeau',               couponText:'Bon pour 1 journée où c\'est TOI qui décides de tout — de l\'heure du réveil à l\'heure du coucher.' },
-
-  // ── 91 à 100 ────────────────────────────────────────
-  { type:'text',   emoji:'🌈', title:'Presque là…',              content:'Tu as ouvert 90 cases. 90 petits morceaux de moi que je t\'ai offerts. Merci de les avoir reçus avec autant de soin.' },
-  { type:'coupon', emoji:'✈️', title:'Bon Cadeau',               couponText:'Bon pour 1 week-end quelque part — destination secrète, valise à faire, aventure garantie.' },
-  { type:'text',   emoji:'💌', title:'Une lettre ouverte',       content:'Mon amour, si tu lis ces mots, c\'est que tu as parcouru un long chemin dans ce calendrier. Je voulais juste te dire que chaque case a été pensée pour toi, avec tout ce que je suis.' },
-  { type:'photo',  emoji:'🌺', title:'Notre plus belle photo',   imageUrl:'photos/94.jpg', caption:'Celle-là, je la garde pour toujours.' },
-  { type:'coupon', emoji:'🏡', title:'Bon Cadeau',               couponText:'Bon pour 1 soirée "nid d\'amour" — je transforme le salon en cocon, tu arrives et tu profites.' },
-  { type:'text',   emoji:'🌟', title:'Ce que je réalise',        content:'En créant ce site, j\'ai réalisé une chose : j\'aurais pu en faire 1000 cases. Il y a tellement de raisons de t\'aimer que ça ne tiendrait jamais dans un calendrier.' },
-  { type:'coupon', emoji:'🎁', title:'Bon Cadeau',               couponText:'Bon pour 1 cadeau surprise de valeur, à réclamer quand tu es prête — je l\'ai prévu rien que pour toi.' },
-  { type:'text',   emoji:'💛', title:'Avant-dernière case…',     content:'La case 99. Tu es presque au bout. Avant d\'ouvrir la dernière, prends une grande inspiration et sache que tu mérites tout le bonheur du monde.' },
-  { type:'photo',  emoji:'🌠', title:'Nous, pour toujours',      imageUrl:'photos/99.jpg', caption:'Notre plus belle histoire, elle commence maintenant.' },
-  { type:'text',   emoji:'❤️', title:'Je t\'aime',              content:'Voilà. Tu as ouvert les 100 cases. Cent petits cadeaux, cent pensées, cent façons de te dire ce que j\'éprouve.\n\nJe t\'aime.\n\nSimple, vrai, sans condition.\n\nÀ toi, pour toujours. ♡' },
-];
-
-/* ════════════════════════════════════════
-   LOGIQUE DE L'APPLICATION
-════════════════════════════════════════ */
-const STORAGE_KEY = 'tresor-opened';
-
-// Charge l'état depuis localStorage
-function loadState() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-  } catch { return []; }
-}
-
-function saveState(opened) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(opened));
-}
-
-let opened = loadState(); // tableau d'indices ouverts
-let currentBoxIndex = null;
-
-// ── Construire la grille ──
-const grid = document.getElementById('grid');
-
+/* ═══════════ GRILLE ═══════════ */
 function buildGrid() {
-  grid.innerHTML = '';
+  const g = document.getElementById('grid');
+  g.innerHTML = '';
   BOXES.forEach((box, i) => {
-    const num = i + 1;
-    const isOpened   = opened.includes(i);
-    const isAvailable = !isOpened && (i === 0 || opened.includes(i - 1));
-
+    const isO = opened.includes(i);
+    const isA = !isO && (i === 0 || opened.includes(i - 1));
+    const n = String(i+1).padStart(2,'0');
     const el = document.createElement('div');
-    el.className = 'box ' + (isOpened ? 'opened' : isAvailable ? 'available' : 'locked');
+    el.className = 'box ' + (isO ? 'opened' : isA ? 'available' : 'locked');
     el.dataset.index = i;
-    el.innerHTML = `
-      <span class="box-num">${num < 10 ? '0'+num : num}</span>
-      <span class="box-emoji">${isOpened ? '✓' : isAvailable ? box.emoji : '🔒'}</span>
-    `;
-    if (isOpened || isAvailable) {
-      el.addEventListener('click', () => openModal(i));
-    }
-    grid.appendChild(el);
+    el.innerHTML = `<span class="box-num">${n}</span><span class="box-emoji">${isO ? '✓' : isA ? box.emoji : '🔒'}</span>`;
+    el.addEventListener('click', () => editMode ? openE(i) : (isO||isA) && openV(i));
+    g.appendChild(el);
   });
-  updateProgress();
-}
-
-// ── Barre de progression ──
-function updateProgress() {
   const n = opened.length;
   document.getElementById('prog-text').textContent = `${n} / 100`;
-  document.getElementById('prog-fill').style.width = `${n}%`;
+  document.getElementById('prog-fill').style.width  = `${n}%`;
 }
 
-// ── Modal ──
-const overlay  = document.getElementById('modal-overlay');
-const modal    = document.getElementById('modal');
-const badge    = document.getElementById('modal-badge');
-const emojiEl  = document.getElementById('modal-emoji');
-const titleEl  = document.getElementById('modal-title');
-const contentEl= document.getElementById('modal-content');
-const btnClose = document.getElementById('btn-close');
-const btnNext  = document.getElementById('btn-next');
-const closeBtn = document.getElementById('modal-close-btn');
-
-function openModal(index) {
-  currentBoxIndex = index;
-  const box = BOXES[index];
-  const num = index + 1;
-  const wasOpened = opened.includes(index);
-
-  badge.textContent = `Trésor n°${num < 10 ? '0'+num : num}`;
-  emojiEl.textContent = box.emoji;
-  // re-trigger animation
-  emojiEl.style.animation = 'none';
-  void emojiEl.offsetHeight;
-  emojiEl.style.animation = '';
-
-  titleEl.textContent = box.title;
-  contentEl.innerHTML = renderContent(box);
-
-  // Bouton "Suivant"
-  const nextExists = index < 99;
-  const nextAvailableAfterOpen = true; // will be after marking opened
-  if (!wasOpened && nextExists) {
-    btnNext.style.display = 'inline-flex';
-    btnNext.textContent = 'Suivant →';
-  } else if (wasOpened && nextExists) {
-    const nextOpened = opened.includes(index + 1);
-    const nextAvailable = index + 1 <= opened.length; // rough check
-    btnNext.style.display = 'none';
-  } else {
-    btnNext.style.display = 'none';
+/* ═══════════ VIEW ═══════════ */
+function openV(i) {
+  viewIdx = i;
+  const box = BOXES[i], wasO = opened.includes(i);
+  const n = String(i+1).padStart(2,'0');
+  document.getElementById('vBadge').textContent = `Trésor n°${n}`;
+  const eEl = document.getElementById('vEmoji');
+  eEl.textContent = box.emoji; eEl.style.animation='none'; void eEl.offsetHeight; eEl.style.animation='';
+  document.getElementById('vTitle').textContent = box.title;
+  document.getElementById('vContent').innerHTML = renderV(box);
+  document.getElementById('btnNext').style.display = (!wasO && i<99) ? 'inline-flex' : 'none';
+  if (!wasO) {
+    opened.push(i);
+    try { localStorage.setItem(SK, JSON.stringify(opened)); } catch {}
+    confetti(); buildGrid();
+    const el = document.querySelector(`[data-index="${i}"]`);
+    if (el) { el.classList.add('opening'); setTimeout(()=>el.classList.remove('opening'),600); }
   }
-
-  // Marquer comme ouvert si pas encore fait
-  if (!wasOpened) {
-    opened.push(index);
-    saveState(opened);
-    // Confettis !
-    spawnConfetti();
-    // Animation sur la case
-    const boxEl = grid.querySelector(`[data-index="${index}"]`);
-    if (boxEl) {
-      boxEl.classList.add('opening');
-      setTimeout(() => {
-        boxEl.classList.remove('opening');
-        buildGrid(); // rafraîchit la grille
-      }, 600);
-    }
-    updateProgress();
-  }
-
-  overlay.classList.add('open');
+  document.getElementById('vOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
+function closeV() { document.getElementById('vOverlay').classList.remove('open'); document.body.style.overflow=''; }
+function goNext() { if (viewIdx!==null && viewIdx<99) { closeV(); setTimeout(()=>openV(viewIdx+1),200); } }
 
-function renderContent(box) {
-  if (box.type === 'text') {
-    const lines = box.content.replace(/\n/g, '<br>');
-    return `<p class="modal-text">${lines}</p>`;
-  }
-  if (box.type === 'coupon') {
-    return `
-      <div class="coupon">
-        <div class="coupon-label">✦ Bon Cadeau ✦</div>
-        <div class="coupon-main">${box.couponText}</div>
-        <div class="coupon-footer">— à utiliser sans modération —</div>
-      </div>`;
-  }
-  if (box.type === 'photo') {
-    const caption = box.caption ? `<p class="modal-caption">"${box.caption}"</p>` : '';
-    if (box.imageUrl) {
-      return `
-        <div class="modal-photo"><img src="${box.imageUrl}" alt="Photo" loading="lazy"></div>
-        ${caption}`;
-    } else {
-      return `
-        <div class="modal-photo">
-          <div class="modal-photo-placeholder">📷<br><br>Ajoute ta photo ici<br><small style="opacity:.5">imageUrl: 'photos/xx.jpg'</small></div>
-        </div>
-        ${caption}`;
-    }
+function renderV(box) {
+  if (box.type==='text') return `<p class="m-text">${(box.content||'').replace(/\n/g,'<br>')}</p>`;
+  if (box.type==='coupon') return `<div class="coupon"><div class="coupon-lbl">✦ Bon Cadeau ✦</div><div class="coupon-main">${box.couponText||''}</div><div class="coupon-foot">— à utiliser sans modération —</div></div>`;
+  if (box.type==='photo') {
+    const cap = box.caption ? `<p class="m-caption">"${box.caption}"</p>` : '';
+    if (box.imageUrl) return `<div class="m-photo"><img src="${box.imageUrl}" alt="Photo" loading="lazy"></div>${cap}`;
+    return `<div class="m-photo"><div class="m-placeholder">📷<br><br>Photo à venir…<br><small style="opacity:.4">(ajoute-la via le mode édition)</small></div></div>${cap}`;
   }
   return '';
 }
 
-function closeModal() {
-  overlay.classList.remove('open');
-  document.body.style.overflow = '';
-  currentBoxIndex = null;
+/* ═══════════ EDIT MODE ═══════════ */
+function askPw() {
+  const pw = prompt('🔐 Mot de passe du mode édition :');
+  if (pw === EDIT_PASSWORD) toggleEdit(true);
+  else if (pw !== null) alert('Mot de passe incorrect.');
+}
+function toggleEdit(on) {
+  editMode = on;
+  document.getElementById('edit-banner').classList.toggle('active', on);
+  document.getElementById('grid').classList.toggle('edit-mode', on);
 }
 
-btnClose.addEventListener('click', closeModal);
-closeBtn.addEventListener('click', closeModal);
-overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+function openE(i) {
+  editIdx = i; pendingPhoto = null;
+  const box = BOXES[i];
+  document.getElementById('eBadge').textContent = `Case n°${String(i+1).padStart(2,'0')}`;
+  document.getElementById('eEmoji').value   = box.emoji || '💌';
+  document.getElementById('eTitle').value   = box.title || '';
+  document.getElementById('eContent').value = box.content || '';
+  document.getElementById('eCoupon').value  = box.couponText || '';
+  document.getElementById('eCaption').value = box.caption || '';
+  const prev = document.getElementById('e-preview');
+  if (box.imageUrl) { prev.src = box.imageUrl; prev.className='show'; }
+  else              { prev.src = ''; prev.className=''; }
+  setType(box.type || 'text');
+  document.getElementById('eOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeE() { document.getElementById('eOverlay').classList.remove('open'); document.body.style.overflow=''; editIdx=null; pendingPhoto=null; }
 
-btnNext.addEventListener('click', () => {
-  if (currentBoxIndex !== null && currentBoxIndex < 99) {
-    closeModal();
-    setTimeout(() => openModal(currentBoxIndex + 1), 200);
-  }
-});
-
-// ── Confettis ──
-function spawnConfetti() {
-  const colors = ['#c9a055','#f0d080','#d4617a','#f2a0b0','#fff','#ffccdd'];
-  for (let i = 0; i < 30; i++) {
-    setTimeout(() => {
-      const c = document.createElement('div');
-      c.className = 'confetti-piece';
-      c.style.cssText = `
-        left: ${Math.random() * 100}vw;
-        top: -10px;
-        background: ${colors[Math.floor(Math.random() * colors.length)]};
-        width: ${4 + Math.random() * 8}px;
-        height: ${4 + Math.random() * 8}px;
-        border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
-        animation-duration: ${1.5 + Math.random() * 2}s;
-        animation-delay: ${Math.random() * 0.3}s;
-      `;
-      document.body.appendChild(c);
-      setTimeout(() => c.remove(), 4000);
-    }, i * 40);
-  }
+function setType(t) {
+  ['text','photo','coupon'].forEach(k => {
+    document.getElementById(`f${k.charAt(0).toUpperCase()+k.slice(1)}`).style.display = k===t?'block':'none';
+    document.querySelector(`.type-tab[data-type="${k}"]`).classList.toggle('active', k===t);
+  });
 }
 
-// ── Init ──
+function handlePhoto(input) {
+  const file = input.files[0]; if (!file) return;
+  const r = new FileReader();
+  r.onload = e => {
+    pendingPhoto = e.target.result;
+    const p = document.getElementById('e-preview');
+    p.src = pendingPhoto; p.className = 'show';
+  };
+  r.readAsDataURL(file);
+}
+
+function saveBox() {
+  if (editIdx === null) return;
+  const box = BOXES[editIdx];
+  const t = document.querySelector('.type-tab.active').dataset.type;
+  box.type  = t;
+  box.emoji = document.getElementById('eEmoji').value.trim() || '💌';
+  box.title = document.getElementById('eTitle').value.trim();
+  if (t==='text')   { box.content=document.getElementById('eContent').value; delete box.couponText; delete box.imageUrl; delete box.caption; }
+  if (t==='coupon') { box.couponText=document.getElementById('eCoupon').value; delete box.content; delete box.imageUrl; delete box.caption; }
+  if (t==='photo')  { if (pendingPhoto) box.imageUrl=pendingPhoto; box.caption=document.getElementById('eCaption').value; delete box.content; delete box.couponText; }
+  closeE(); buildGrid();
+}
+
+/* ═══════════ TÉLÉCHARGEMENT ═══════════ */
+function downloadSite() {
+  document.getElementById('boxesData').textContent = '\n' + JSON.stringify(BOXES, null, 2) + '\n';
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([html], {type:'text/html;charset=utf-8'}));
+  a.download = 'index.html'; a.click(); URL.revokeObjectURL(a.href);
+  const t = document.getElementById('toast');
+  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 4000);
+}
+
+/* ═══════════ CONFETTI ═══════════ */
+function confetti() {
+  const cols = ['#c9a055','#f0d080','#d4617a','#f2a0b0','#fff','#ffccdd'];
+  for (let i=0;i<28;i++) setTimeout(()=>{
+    const c = document.createElement('div'); c.className='cp';
+    c.style.cssText=`left:${Math.random()*100}vw;top:-8px;background:${cols[Math.floor(Math.random()*cols.length)]};width:${4+Math.random()*7}px;height:${4+Math.random()*7}px;border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${1.5+Math.random()*2}s;animation-delay:${Math.random()*.3}s;`;
+    document.body.appendChild(c); setTimeout(()=>c.remove(),4000);
+  }, i*40);
+}
+
+/* ═══════════ EVENTS ═══════════ */
+document.getElementById('vOverlay').addEventListener('click', e => { if(e.target===e.currentTarget) closeV(); });
+document.getElementById('eOverlay').addEventListener('click', e => { if(e.target===e.currentTarget) closeE(); });
+document.addEventListener('keydown', e => { if(e.key==='Escape'){closeV();closeE();} });
+
 buildGrid();
 </script>
 </body>
