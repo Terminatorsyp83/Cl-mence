@@ -91,8 +91,8 @@
     @keyframes ebouce { from{transform:scale(0) rotate(-20deg)} to{transform:scale(1) rotate(0)} }
     .m-title { font-family:'Cormorant Garamond',serif; font-size:clamp(1.5rem,4vw,2.2rem); font-style:italic; font-weight:400; color:var(--gold2); text-align:center; margin-bottom:1.2rem; line-height:1.2; }
     .m-text  { font-family:'Cormorant Garamond',serif; font-size:clamp(1.05rem,2.5vw,1.25rem); font-style:italic; color:var(--cream); line-height:1.8; text-align:center; opacity:.9; }
-    .m-photo { width:100%; border-radius:14px; overflow:hidden; margin-bottom:1rem; aspect-ratio:4/3; background:rgba(255,255,255,.04); display:flex; align-items:center; justify-content:center; border:1px dashed rgba(201,160,85,.2); }
-    .m-photo img { width:100%; height:100%; object-fit:cover; border-radius:14px; }
+    .m-photo { width:100%; border-radius:14px; overflow:hidden; margin-bottom:1rem; background:rgba(255,255,255,.04); display:flex; align-items:center; justify-content:center; border:1px dashed rgba(201,160,85,.2); }
+    .m-photo img { width:100%; height:auto; max-height:70vh; object-fit:contain; border-radius:14px; display:block; }
     .m-placeholder { color:var(--muted); font-size:.85rem; text-align:center; padding:1rem; line-height:1.6; }
     .m-caption { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.05rem; color:var(--rose2); text-align:center; margin-top:.8rem; opacity:.85; }
     .coupon { background:rgba(255,255,255,.03); border:2px dashed rgba(201,160,85,.35); border-radius:16px; padding:1.5rem; text-align:center; position:relative; }
@@ -133,6 +133,15 @@
     .footer span { color:var(--rose); }
     .edit-trigger { display:block; margin:1.2rem auto 2rem; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:99px; color:rgba(255,255,255,.18); font-size:.68rem; font-weight:600; padding:.3rem .9rem; cursor:pointer; transition:all .25s; letter-spacing:.06em; width:fit-content; }
     .edit-trigger:hover { color:var(--gold); border-color:rgba(201,160,85,.3); background:rgba(201,160,85,.06); }
+    /* ─── CONFIRM OVERLAY ─── */
+    #confirmOverlay { position:fixed; inset:0; z-index:150; background:rgba(7,2,12,.92); backdrop-filter:blur(16px); display:flex; align-items:center; justify-content:center; padding:1rem; opacity:0; pointer-events:none; transition:opacity .3s ease; }
+    #confirmOverlay.open { opacity:1; pointer-events:all; }
+    .confirm-box { background:linear-gradient(160deg,#200d30 0%,#150820 50%,#1e0a16 100%); border:1px solid rgba(201,160,85,.3); border-radius:28px; padding:2.5rem 2rem; max-width:380px; width:100%; text-align:center; box-shadow:0 30px 80px rgba(0,0,0,.8),0 0 60px rgba(201,160,85,.08); transform:scale(.88) translateY(24px); transition:transform .35s cubic-bezier(.34,1.56,.64,1); }
+    #confirmOverlay.open .confirm-box { transform:scale(1) translateY(0); }
+    .confirm-lock { font-size:2.8rem; margin-bottom:.8rem; animation:ebouce .5s cubic-bezier(.34,1.56,.64,1); }
+    .confirm-num { font-size:.7rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-bottom:.5rem; }
+    .confirm-q { font-family:'Cormorant Garamond',serif; font-size:clamp(1.3rem,4vw,1.75rem); font-style:italic; color:var(--gold2); line-height:1.3; margin-bottom:1.8rem; }
+    .confirm-btns { display:flex; gap:.75rem; justify-content:center; }
     /* ─── TOAST ─── */
     .toast { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%) translateY(80px); background:#1a4a2a; border:1px solid #2d9e5a; border-radius:12px; padding:.75rem 1.5rem; font-size:.85rem; font-weight:600; color:#7effa0; z-index:300; transition:transform .4s cubic-bezier(.34,1.56,.64,1); white-space:nowrap; pointer-events:none; }
     .toast.show { transform:translateX(-50%) translateY(0); }
@@ -242,6 +251,19 @@
     <div class="m-nav">
       <button class="btn btn-ghost" onclick="closeE()">Annuler</button>
       <button class="btn btn-rose" onclick="saveBox()">💾 Sauvegarder</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM OVERLAY -->
+<div id="confirmOverlay">
+  <div class="confirm-box">
+    <div class="confirm-lock" id="confirmEmoji">🎁</div>
+    <div class="confirm-num" id="confirmNum">Trésor n°01</div>
+    <div class="confirm-q">Es-tu prête à découvrir<br>ton petit trésor ? ✨</div>
+    <div class="confirm-btns">
+      <button class="btn btn-ghost" onclick="closeConfirm()">Pas encore</button>
+      <button class="btn btn-rose" onclick="confirmOpen()">Ouvrir ♡</button>
     </div>
   </div>
 </div>
@@ -578,6 +600,27 @@
 </script>
 
 <script>
+/* ═══════════ CONFIRM ═══════════ */
+let pendingOpenIdx = null;
+function askConfirm(i) {
+  pendingOpenIdx = i;
+  const box = BOXES[i];
+  document.getElementById('confirmEmoji').textContent = box.emoji || '🎁';
+  document.getElementById('confirmNum').textContent = `Trésor n°${String(i+1).padStart(2,'0')}`;
+  document.getElementById('confirmOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeConfirm() {
+  document.getElementById('confirmOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  pendingOpenIdx = null;
+}
+function confirmOpen() {
+  const i = pendingOpenIdx;
+  closeConfirm();
+  if (i !== null) setTimeout(() => openV(i), 100);
+}
+
 /* ═══════════ ÉTAT ═══════════ */
 const BOXES = JSON.parse(document.getElementById('boxesData').textContent);
 const TOTAL = BOXES.length;
@@ -598,7 +641,11 @@ function buildGrid() {
     el.className = 'box ' + (isO ? 'opened' : isA ? 'available' : 'locked');
     el.dataset.index = i;
     el.innerHTML = `<span class="box-num">${n}</span><span class="box-emoji">${isO ? '✓' : isA ? box.emoji : '🔒'}</span>`;
-    el.addEventListener('click', () => editMode ? openE(i) : (isO||isA) && openV(i));
+    el.addEventListener('click', () => {
+      if (editMode) { openE(i); return; }
+      if (isO) { openV(i); return; } // déjà ouvert → direct
+      if (isA) { askConfirm(i); }    // disponible → confirmation
+    });
     g.appendChild(el);
   });
   const n = opened.length;
@@ -716,9 +763,10 @@ function confetti() {
 }
 
 /* ═══════════ EVENTS ═══════════ */
+document.getElementById('confirmOverlay').addEventListener('click', e => { if(e.target===e.currentTarget) closeConfirm(); });
 document.getElementById('vOverlay').addEventListener('click', e => { if(e.target===e.currentTarget) closeV(); });
 document.getElementById('eOverlay').addEventListener('click', e => { if(e.target===e.currentTarget) closeE(); });
-document.addEventListener('keydown', e => { if(e.key==='Escape'){closeV();closeE();} });
+document.addEventListener('keydown', e => { if(e.key==='Escape'){closeV();closeE();closeConfirm();} });
 
 buildGrid();
 </script>
